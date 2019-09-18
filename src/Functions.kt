@@ -1,10 +1,10 @@
 import java.io.File
-import java.math.BigDecimal
 import java.math.BigInteger
 import kotlin.math.floor
 import kotlin.math.sqrt
 
 val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }
+val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
 
 fun fibonacciUntil(max: Int) = mutableListOf(1, 1)
     .also { while (it.last() < max) it.add(it.takeLast(2).sum()) }
@@ -17,7 +17,6 @@ fun primesBelow(max: Int): MutableList<Int> {
         result = result.filterNot { it % divisor == 0 && it != divisor }
             .toMutableList()
     }
-
     return result.toMutableList()
 }
 
@@ -151,4 +150,8 @@ fun List<BigInteger>.sum(): BigInteger {
     var output = BigInteger.ZERO
     this.forEach { output += it }
     return output
+}
+
+fun largestGridProduct(grid: List<List<BigInteger>>, length: Int) {
+
 }
