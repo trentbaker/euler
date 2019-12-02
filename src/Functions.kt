@@ -20,8 +20,6 @@ fun primesBelow(max: Int): MutableList<Int> {
     return result.toMutableList()
 }
 
-fun primeFactors(input: Int): List<BigInteger> = primeFactors(input.toBigInteger())
-
 fun primeFactors(input: BigInteger): List<BigInteger> {
     if (input == BigInteger.ONE) return listOf(input)
 
@@ -162,3 +160,41 @@ fun Int.factors() = mutableListOf<Int>().also { output ->
 		}
 	}
 }.distinct().sorted().toList()
+
+fun countRoutesInSquareGrid(dimension: Int): BigInteger {
+	var paths = BigInteger.ONE
+	for (i in 0 until dimension) {
+		paths *= (2 * dimension).toBigInteger() - i.toBigInteger()
+		paths /= (i + 1).toBigInteger()
+	}
+	return paths
+}
+
+fun numberToWords(input: Int) =
+	teenWords[input] ?: input.toString().map { it.toInt() - 48 }.let { num ->
+		when (num.size) {
+			1 -> singleDigitWords[num[0]].toString()
+			2 -> tenMultipleWords[num[0]] + singleDigitWords.getOrElse(num[1]) { "" }
+			3 -> {
+				singleDigitWords[num[0]] +
+					"HUNDRED" +
+					(if (tenMultipleWords[num[1]] != null || singleDigitWords[num[2]] != null || teenWords["${num[1]}${num[2]}".toInt()] != null) "AND" else "") +
+					teenWords.getOrElse("${num[1]}${num[2]}".toInt()) {
+						tenMultipleWords.getOrElse(num[1]) { "" } +
+							singleDigitWords.getOrElse(num[2]) { "" }
+					}
+			}
+			4 -> {
+				singleDigitWords[num[0]] +
+					"THOUSAND" +
+					singleDigitWords.getOrElse(num[1]) { "" } +
+					(if (singleDigitWords[num[1]] != null) "HUNDRED" else "") +
+					(if (tenMultipleWords[num[2]] != null || singleDigitWords[num[3]] != null || teenWords["${num[2]}${num[3]}".toInt()] != null) "AND" else "") +
+					teenWords.getOrElse("${num[2]}${num[3]}".toInt()) {
+						tenMultipleWords.getOrElse(num[2]) { "" } +
+							singleDigitWords.getOrElse(num[3]) { "" }
+					}
+			}
+			else -> "oof"
+		}
+	}

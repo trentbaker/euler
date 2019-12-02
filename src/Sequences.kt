@@ -14,3 +14,5 @@ fun collatzSequence(start: BigInteger) = generateSequence(start) {
 		} else (it.times(3.toBigInteger())) + BigInteger.ONE
 	}
 }
+
+fun fibonacciSequence(start: Pair<Int, Int> = Pair(0, 1)) = generateSequence(start) { Pair(it.second, it.first + it.second)}.map { it.second }
