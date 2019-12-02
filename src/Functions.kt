@@ -5,9 +5,9 @@ import kotlin.math.sqrt
 
 val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }
 val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
+val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
 
-fun fibonacciUntil(max: Int) = mutableListOf(1, 1)
-    .also { while (it.last() < max) it.add(it.takeLast(2).sum()) }
+fun fibonacciUntil(max: Int) = fibonacciSequence().takeWhile { it < 4000000 }
 
 fun primesBelow(max: Int): MutableList<Int> {
     var result = (listOf(2) + (3..max step 2).toList())
@@ -105,6 +105,7 @@ fun getPrimes(numPrimes: Int): List<Int> {
     }
     return primes.toList()
 }
+
 fun List<Int>.sublistOrNull(fromIndex: Int, toIndex: Int): List<Int>? {
     var output = listOf<Int>()
     try {
@@ -119,11 +120,11 @@ fun largestProductAdjacent(numAdjacent: Int): BigInteger {
     var maxProduct = BigInteger.ZERO
     THOUSAND_DIGIT_NUMBER.forEachIndexed { index, i ->
         product(
-            THOUSAND_DIGIT_NUMBER.sublistOrNull(
-                index,
-                index + numAdjacent
-            )?.map { it.toBigInteger() }?.toMutableList()
-        )
+			THOUSAND_DIGIT_NUMBER.sublistOrNull(
+				index,
+				index + numAdjacent
+			)?.map { it.toBigInteger() }?.toMutableList()
+		)
             .let {
                 if (it ?: BigInteger.ZERO > maxProduct) maxProduct = it
             }
@@ -152,6 +153,12 @@ fun List<BigInteger>.sum(): BigInteger {
     return output
 }
 
-fun largestGridProduct(grid: List<List<BigInteger>>, length: Int) {
-
-}
+fun Int.factors() = mutableListOf<Int>().also { output ->
+	// can check only numbers < sqrt(this) if you add inferred factors
+	IntRange(0, sqrt(this.toDouble()).toInt()).forEach { current ->
+		if (current != 0 && this % current == 0) {
+			output.add(current) // add the found factor
+			output.add(this / current) // add the inferred factor
+		}
+	}
+}.distinct().sorted().toList()
