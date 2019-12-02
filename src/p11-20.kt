@@ -15,10 +15,7 @@ fun main() {
 	println("PE16. What is the sum of the digits of the number 2^1000: " +
 		2.toBigDecimal().pow(1000).toString().map { it.toInt() - 48 }.sum()
 	)
-	timed {
-		println("PE17. If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used: " +
-			IntRange(1, 1000).flatMap { numberToWords(it).toList() }.size
-		)
-	}
-
+	println("PE17. If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used: " +
+		IntRange(1, 1000).flatMap { numberToWords(it).toList() }.size
+	)
 }

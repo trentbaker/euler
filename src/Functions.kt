@@ -1,13 +1,8 @@
-import java.io.File
 import java.math.BigInteger
 import kotlin.math.floor
 import kotlin.math.sqrt
 
-val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }
-val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
-val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
-
-fun fibonacciUntil(max: Int) = fibonacciSequence().takeWhile { it < 4000000 }
+fun fibonacciUntil(max: Int): Sequence<Int> = fibonacciSequence().takeWhile { it < 4000000 }
 
 fun primesBelow(max: Int): MutableList<Int> {
     var result = (listOf(2) + (3..max step 2).toList())
@@ -84,7 +79,7 @@ fun smallestDivisbleBy(input: IntRange): Int {
     return current.toInt()
 }
 
-fun squareOfSum(input: IntRange) = input.sum().toBigInteger().pow(2)
+fun squareOfSum(input: IntRange): BigInteger = input.sum().toBigInteger().pow(2)
 
 fun sumOfSquares(input: IntRange): BigInteger {
     var output = BigInteger.ZERO
@@ -142,7 +137,7 @@ fun sumTo1000(): List<Triple<Int, Int, Int>> {
     return output
 }
 
-fun isPythagTriple(input: Triple<Int, Int, Int>) =
+fun isPythagTriple(input: Triple<Int, Int, Int>): Boolean =
     input.first.toBigInteger().pow(2) + input.second.toBigInteger().pow(2) == input.third.toBigInteger().pow(2)
 
 fun List<BigInteger>.sum(): BigInteger {
@@ -151,7 +146,7 @@ fun List<BigInteger>.sum(): BigInteger {
     return output
 }
 
-fun Int.factors() = mutableListOf<Int>().also { output ->
+fun Int.factors(): List<Int> = mutableListOf<Int>().also { output ->
 	// can check only numbers < sqrt(this) if you add inferred factors
 	IntRange(0, sqrt(this.toDouble()).toInt()).forEach { current ->
 		if (current != 0 && this % current == 0) {
@@ -170,7 +165,7 @@ fun countRoutesInSquareGrid(dimension: Int): BigInteger {
 	return paths
 }
 
-fun numberToWords(input: Int) =
+fun numberToWords(input: Int): String =
 	teenWords[input] ?: input.toString().map { it.toInt() - 48 }.let { num ->
 		when (num.size) {
 			1 -> singleDigitWords[num[0]].toString()
