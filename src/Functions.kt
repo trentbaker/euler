@@ -193,3 +193,29 @@ fun numberToWords(input: Int): String =
 			else -> "oof"
 		}
 	}
+
+fun importTriangle(input: List<List<String>>): BinaryTree =
+        input.map { layer -> layer.map { BinaryNode(it.toInt()) } }.let { tree ->
+            tree.forEachIndexed { layerIndex, layer ->
+                layer.forEachIndexed { index, node ->
+                    node.l = tree.getOrNull(layerIndex + 1)?.getOrNull(index)
+                    node.r = tree.getOrNull(layerIndex + 1)?.getOrNull(index + 1)
+                }
+            }
+            tree
+        }
+
+fun BinaryTree.format() = this.last().joinToString(" ").length.let { width ->
+    this.map { layer ->
+        val layerString = layer.joinToString(" ")
+        val layerWidth = layerString.length.let { if (it < 0) 0 else it }
+        val padding = ((width - layerWidth) / 2).takeIf { it >= 0 } ?: 0
+        "".padStart(padding) + layerString
+    }
+}
+
+fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
+    this.asReversed().forEach { layer -> layer.forEach { it.eatLargestLivingChild() } }
+    if (print) this.format().forEach { println(it) }
+    return this.first().first().value
+}
