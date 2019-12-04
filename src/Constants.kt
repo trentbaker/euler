@@ -171,3 +171,17 @@ val hundredMultipleWords = mapOf(
         100 to "HUNDRED",
         1000 to "THOUSAND"
 )
+
+val digitFactorialLoopFlags = listOf(
+        1 to 0,
+        145 to 0,
+        1454 to 2,
+        169 to 2,
+        2 to 0,
+        363601 to 2
+        40585 to 0,
+        45361 to 1,
+        45362 to 1,
+        871 to 1,
+        872 to 1,
+).map { it.first.toBigInteger() to it.second }

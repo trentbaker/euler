@@ -219,3 +219,19 @@ fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
     if (print) this.format().forEach { println(it) }
     return this.first().first().value
 }
+
+fun BigInteger.factorial(): BigInteger {
+    var out = BigInteger.ONE
+    for (i in 0 until this.toInt()) out *= this - i.toBigInteger()
+    return out
+}
+
+fun digitFactorialChainUntilNotUniqueLength(start: Int): Any {
+    var current = start.toBigInteger()
+    val chain = mutableListOf<BigInteger>(current)
+    do {
+        current = digitFactorialChain(current).first()
+        chain.add(current)
+    } while (!digitFactorialLoopFlags.map { it.first }.contains(current))
+    return chain.size + (digitFactorialLoopFlags.firstOrNull { it.first == chain.last() }?.second ?: 0)
+}
