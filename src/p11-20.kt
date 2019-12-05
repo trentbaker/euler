@@ -1,3 +1,6 @@
+import java.time.DayOfWeek
+import java.time.LocalDate
+
 fun main() {
     println("PE12. What is the value of the first triangle number to have over five hundred divisors: " +
             triangleNumbers().first { it.factors().size > 500 }
@@ -19,6 +22,14 @@ fun main() {
             IntRange(1, 1000).flatMap { numberToWords(it).toList() }.size
     )
     println("PE18. Find the maximum total from top to bottom of the fifteen layer triangle: " +
-            importTriangle(Triangles.FOUR_LAYER_TRIANGLE).largestWeightRoute()
+            importTriangle(Triangles.FIFTEEN_LAYER_TRIANGLE).largestWeightRoute()
+    )
+    println("PE19. How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000): " +
+            LocalDate.of(1901, 1, 1)
+                    .firstOfTheMonthsUntil(LocalDate.of(2000, 12, 31))
+                    .filter { it.dayOfWeek == DayOfWeek.SUNDAY }.size
+    )
+    println("PE20. Find the sum of the digits in the number 100: " +
+            100.toBigInteger().factorial().toString().map { it.toInt() - 48 }.sum()
     )
 }

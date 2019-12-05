@@ -167,21 +167,19 @@ val tenMultipleWords = mapOf(
         9 to "NINETY"
 )
 
-val hundredMultipleWords = mapOf(
-        100 to "HUNDRED",
-        1000 to "THOUSAND"
-)
-
 val digitFactorialLoopFlags = listOf(
-        1 to 0,
-        145 to 0,
-        1454 to 2,
-        169 to 2,
-        2 to 0,
-        363601 to 2
-        40585 to 0,
-        45361 to 1,
-        45362 to 1,
-        871 to 1,
-        872 to 1,
-).map { it.first.toBigInteger() to it.second }
+        1 to listOf(),
+        2 to listOf(),
+        145 to listOf(),
+        40585 to listOf(),
+
+        0 to listOf(1),
+        871 to listOf(45361),
+        45361 to listOf(871),
+        872 to listOf(45362),
+        45362 to listOf(872),
+
+        169 to listOf(363601, 1454),
+        1454 to listOf(169, 363601),
+        363601 to listOf(1454, 169)
+).map { it.first.toBigInteger() to it.second.map { it.toBigInteger() } }

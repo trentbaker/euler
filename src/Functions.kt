@@ -1,8 +1,10 @@
 import java.math.BigInteger
+import java.time.LocalDate
 import kotlin.math.floor
+import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-fun fibonacciUntil(max: Int): Sequence<Int> = fibonacciSequence().takeWhile { it < 4000000 }
+fun fibonacciUntil(max: Int): Sequence<Int> = fibonacciSequence().takeWhile { it < max }
 
 fun primesBelow(max: Int): MutableList<Int> {
     var result = (listOf(2) + (3..max step 2).toList())
@@ -205,14 +207,21 @@ fun importTriangle(input: List<List<String>>): BinaryTree =
             tree
         }
 
-fun BinaryTree.format() = this.last().joinToString(" ").length.let { width ->
-    this.map { layer ->
-        val layerString = layer.joinToString(" ")
-        val layerWidth = layerString.length.let { if (it < 0) 0 else it }
-        val padding = ((width - layerWidth) / 2).takeIf { it >= 0 } ?: 0
-        "".padStart(padding) + layerString
-    }
-}
+fun BinaryTree.format() =
+        this.flatten().map { it.value.toString().length }.average().roundToInt().let { averageWidth ->
+
+            fun List<BinaryNode>.withPaddedNumbers() = this.joinToString(" ") { it.toString().padStart(averageWidth, '0') }
+
+            this.last().withPaddedNumbers().length.let { totalWidth ->
+                this.map { layer ->
+                    val layerString = layer.withPaddedNumbers()
+                    val layerWidth = layerString.length.let { if (it < 0) 0 else it }
+                    val layerPadding = ((totalWidth - layerWidth) / 2).takeIf { it >= 0 } ?: 0
+                    "".padStart(layerPadding) + layerString
+                }
+            }
+        }
+
 
 fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
     this.asReversed().forEach { layer -> layer.forEach { it.eatLargestLivingChild() } }
@@ -222,16 +231,28 @@ fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
 
 fun BigInteger.factorial(): BigInteger {
     var out = BigInteger.ONE
-    for (i in 0 until this.toInt()) out *= this - i.toBigInteger()
+    var current = this
+    while (current > BigInteger.ZERO) out *= current--
     return out
 }
 
-fun digitFactorialChainUntilNotUniqueLength(start: Int): Any {
-    var current = start.toBigInteger()
-    val chain = mutableListOf<BigInteger>(current)
+fun digitFactorialChainUntilNotUnique(start: Int) = digitFactorialChainUntilNotUnique(start.toBigInteger())
+
+fun digitFactorialChainUntilNotUnique(start: BigInteger): List<BigInteger> {
+    var current = start
+    val chain = mutableListOf(current)
     do {
         current = digitFactorialChain(current).first()
         chain.add(current)
     } while (!digitFactorialLoopFlags.map { it.first }.contains(current))
-    return chain.size + (digitFactorialLoopFlags.firstOrNull { it.first == chain.last() }?.second ?: 0)
+    return chain.toList() + (digitFactorialLoopFlags.firstOrNull { it.first == chain.last() }?.second ?: listOf())
+}
+
+fun LocalDate.firstOfTheMonthsUntil(end: LocalDate) = mutableListOf<LocalDate>().let {
+    var current = this
+    while (current.isBefore(end)) {
+        it.add(current)
+        current = current.plusMonths(1)
+    }
+    it
 }
