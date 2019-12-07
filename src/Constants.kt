@@ -3,6 +3,7 @@ import java.io.File
 val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }
 val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
 val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
+val NAMES_FILE = File("res/names.txt").readText().filter { it != '"' }.split(',')
 
 object Triangles {
     val FOUR_LAYER_TRIANGLE = listOf(

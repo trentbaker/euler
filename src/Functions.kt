@@ -12,7 +12,7 @@ fun primesBelow(max: Int): MutableList<Int> {
 
     divisors.forEach { divisor ->
         result = result.filterNot { it % divisor == 0 && it != divisor }
-            .toMutableList()
+                .toMutableList()
     }
     return result.toMutableList()
 }
@@ -23,9 +23,9 @@ fun primeFactors(input: BigInteger): List<BigInteger> {
     // may need to increase the starting list of primes... setting a const for now
     // but only checking primes less than input
     var relevantPrimes = primesBelow(10000)
-        .filter { it.toBigInteger() <= input }
-        .map { it.toBigInteger() }
-        .toMutableList()
+            .filter { it.toBigInteger() <= input }
+            .map { it.toBigInteger() }
+            .toMutableList()
     val output: MutableList<BigInteger> = mutableListOf()
     var current = input
 
@@ -77,7 +77,7 @@ fun smallestDivisbleBy(input: IntRange): Int {
     var current = 2520.0
     while (input.any { current % it != 0.0 })
         current += input.filter { current % it == 0.0 }.max()
-            ?: 1
+                ?: 1
     return current.toInt()
 }
 
@@ -115,14 +115,14 @@ fun largestProductAdjacent(numAdjacent: Int): BigInteger {
     var maxProduct = BigInteger.ZERO
     THOUSAND_DIGIT_NUMBER.forEachIndexed { index, i ->
         product(
-			THOUSAND_DIGIT_NUMBER.sublistOrNull(
-				index,
-				index + numAdjacent
-			)?.map { it.toBigInteger() }?.toMutableList()
-		)
-            .let {
-                if (it ?: BigInteger.ZERO > maxProduct) maxProduct = it
-            }
+                THOUSAND_DIGIT_NUMBER.sublistOrNull(
+                        index,
+                        index + numAdjacent
+                )?.map { it.toBigInteger() }?.toMutableList()
+        )
+                .let {
+                    if (it ?: BigInteger.ZERO > maxProduct) maxProduct = it
+                }
     }
     return maxProduct
 }
@@ -140,7 +140,7 @@ fun sumTo1000(): List<Triple<Int, Int, Int>> {
 }
 
 fun isPythagTriple(input: Triple<Int, Int, Int>): Boolean =
-    input.first.toBigInteger().pow(2) + input.second.toBigInteger().pow(2) == input.third.toBigInteger().pow(2)
+        input.first.toBigInteger().pow(2) + input.second.toBigInteger().pow(2) == input.third.toBigInteger().pow(2)
 
 fun List<BigInteger>.sum(): BigInteger {
     var output = BigInteger.ZERO
@@ -149,52 +149,52 @@ fun List<BigInteger>.sum(): BigInteger {
 }
 
 fun Int.factors(): List<Int> = mutableListOf<Int>().also { output ->
-	// can check only numbers < sqrt(this) if you add inferred factors
-	IntRange(0, sqrt(this.toDouble()).toInt()).forEach { current ->
-		if (current != 0 && this % current == 0) {
-			output.add(current) // add the found factor
-			output.add(this / current) // add the inferred factor
-		}
-	}
+    // can check only numbers < sqrt(this) if you add inferred factors
+    IntRange(0, sqrt(this.toDouble()).toInt()).forEach { current ->
+        if (current != 0 && this % current == 0) {
+            output.add(current) // add the found factor
+            output.add(this / current) // add the inferred factor
+        }
+    }
 }.distinct().sorted().toList()
 
 fun countRoutesInSquareGrid(dimension: Int): BigInteger {
-	var paths = BigInteger.ONE
-	for (i in 0 until dimension) {
-		paths *= (2 * dimension).toBigInteger() - i.toBigInteger()
-		paths /= (i + 1).toBigInteger()
-	}
-	return paths
+    var paths = BigInteger.ONE
+    for (i in 0 until dimension) {
+        paths *= (2 * dimension).toBigInteger() - i.toBigInteger()
+        paths /= (i + 1).toBigInteger()
+    }
+    return paths
 }
 
 fun numberToWords(input: Int): String =
-	teenWords[input] ?: input.toString().map { it.toInt() - 48 }.let { num ->
-		when (num.size) {
-			1 -> singleDigitWords[num[0]].toString()
-			2 -> tenMultipleWords[num[0]] + singleDigitWords.getOrElse(num[1]) { "" }
-			3 -> {
-				singleDigitWords[num[0]] +
-					"HUNDRED" +
-					(if (tenMultipleWords[num[1]] != null || singleDigitWords[num[2]] != null || teenWords["${num[1]}${num[2]}".toInt()] != null) "AND" else "") +
-					teenWords.getOrElse("${num[1]}${num[2]}".toInt()) {
-						tenMultipleWords.getOrElse(num[1]) { "" } +
-							singleDigitWords.getOrElse(num[2]) { "" }
-					}
-			}
-			4 -> {
-				singleDigitWords[num[0]] +
-					"THOUSAND" +
-					singleDigitWords.getOrElse(num[1]) { "" } +
-					(if (singleDigitWords[num[1]] != null) "HUNDRED" else "") +
-					(if (tenMultipleWords[num[2]] != null || singleDigitWords[num[3]] != null || teenWords["${num[2]}${num[3]}".toInt()] != null) "AND" else "") +
-					teenWords.getOrElse("${num[2]}${num[3]}".toInt()) {
-						tenMultipleWords.getOrElse(num[2]) { "" } +
-							singleDigitWords.getOrElse(num[3]) { "" }
-					}
-			}
-			else -> "oof"
-		}
-	}
+        teenWords[input] ?: input.toString().map { it.toInt() - 48 }.let { num ->
+            when (num.size) {
+                1 -> singleDigitWords[num[0]].toString()
+                2 -> tenMultipleWords[num[0]] + singleDigitWords.getOrElse(num[1]) { "" }
+                3 -> {
+                    singleDigitWords[num[0]] +
+                            "HUNDRED" +
+                            (if (tenMultipleWords[num[1]] != null || singleDigitWords[num[2]] != null || teenWords["${num[1]}${num[2]}".toInt()] != null) "AND" else "") +
+                            teenWords.getOrElse("${num[1]}${num[2]}".toInt()) {
+                                tenMultipleWords.getOrElse(num[1]) { "" } +
+                                        singleDigitWords.getOrElse(num[2]) { "" }
+                            }
+                }
+                4 -> {
+                    singleDigitWords[num[0]] +
+                            "THOUSAND" +
+                            singleDigitWords.getOrElse(num[1]) { "" } +
+                            (if (singleDigitWords[num[1]] != null) "HUNDRED" else "") +
+                            (if (tenMultipleWords[num[2]] != null || singleDigitWords[num[3]] != null || teenWords["${num[2]}${num[3]}".toInt()] != null) "AND" else "") +
+                            teenWords.getOrElse("${num[2]}${num[3]}".toInt()) {
+                                tenMultipleWords.getOrElse(num[2]) { "" } +
+                                        singleDigitWords.getOrElse(num[3]) { "" }
+                            }
+                }
+                else -> "oof"
+            }
+        }
 
 fun importTriangle(input: List<List<String>>): BinaryTree =
         input.map { layer -> layer.map { BinaryNode(it.toInt()) } }.let { tree ->
@@ -255,4 +255,20 @@ fun LocalDate.firstOfTheMonthsUntil(end: LocalDate) = mutableListOf<LocalDate>()
         current = current.plusMonths(1)
     }
     it
+}
+
+fun amicableNumbersBelow(max: Int) = IntRange(0, max).map { it to it.factors().dropLast(1).sum() }.let { facs ->
+    facs.filter { it.first == facs.getOrNull(it.second)?.second ?: false  && it.first != it.second }
+}.map { it.first }
+
+fun List<String>.calculateNameScores() = this.sorted().mapIndexed { index, s ->
+    s to s.toList().map { it.toInt() - 64 }.sum() * (index + 1)
+}
+
+fun Int.isAbundant() = this.factors().dropLast(1).sum() > this
+
+fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { abundants ->
+    this.filter { current ->
+        abundants.map { current - it }.none { abundants.contains(it)}
+    }
 }
