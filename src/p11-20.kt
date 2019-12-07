@@ -9,7 +9,7 @@ fun main() {
             HUNDRED_FIFTY_DIGITS.sum().toString().take(10)
     )
     println("PE14. Which number, under one million, produces the longest collatz chain: " +
-            // IntRange(1, 1000000).map { it to collatzSequence(it).count() }.maxBy { it.second }?.first
+            // IntRange(1, 1000000).map { it to collatzSequence(it).count() }.maxBy { it.second }?.first // took 14.899s
             "837799"
     )
     println("PE15. Starting in the top left corner of a grid, and only being able to move to the right and down, how many such routes are there: " +

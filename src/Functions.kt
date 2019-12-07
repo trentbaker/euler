@@ -74,7 +74,7 @@ fun largestPalindromeProduct3Digits(): Int {
 }
 
 fun smallestDivisbleBy(input: IntRange): Int {
-    var current = 2520.0
+    var current = input.first.toDouble()
     while (input.any { current % it != 0.0 })
         current += input.filter { current % it == 0.0 }.max()
                 ?: 1
