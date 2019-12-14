@@ -9,4 +9,7 @@ fun main() {
             // IntRange(0, 28123).toList().cannotSumFromAbundant().sum() // took 88.247s
             4179871
     )
+    println("PE25. What is the index of the first term in the Fibonacci sequence to contain 1000 digits: " +
+        bigFibonacciSequence().mapIndexed { index, it ->  it to index }.filter { it.first.toString().length == 1000 }.first().second
+    )
 }

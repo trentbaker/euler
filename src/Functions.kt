@@ -229,6 +229,8 @@ fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
     return this.first().first().value
 }
 
+fun Int.factorial() = this.toBigInteger().factorial().toInt()
+
 fun BigInteger.factorial(): BigInteger {
     var out = BigInteger.ONE
     var current = this
