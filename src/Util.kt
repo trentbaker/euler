@@ -3,3 +3,4 @@ fun timed(fn: () -> Any): Long = System.currentTimeMillis().also { start ->
 }
 
 typealias BinaryTree = List<List<BinaryNode>>
+typealias Hand = List<Card>

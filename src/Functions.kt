@@ -274,3 +274,10 @@ fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { ab
         abundants.map { current - it }.none { abundants.contains(it)}
     }
 }
+
+fun List<Pair<List<String>, List<String>>>.importAsHands(): List<Pair<Hand, Hand>> = this.map { players -> players.first.map { Card(it) } to players.second.map { Card(it) } }
+
+fun Hand.score(): Int {
+
+    return 0
+}

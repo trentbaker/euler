@@ -4,6 +4,7 @@ val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt()
 val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
 val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
 val NAMES_FILE = File("res/names.txt").readText().filter { it != '"' }.split(',')
+val POKER_HANDS= File("res/poker_hands.txt").readLines().map { it.split(' ') }.map { it.take(it.size / 2) to it.drop(it.size / 2) }
 
 object Triangles {
     val FOUR_LAYER_TRIANGLE = listOf(
@@ -184,3 +185,4 @@ val digitFactorialLoopFlags = listOf(
         1454 to listOf(169, 363601),
         363601 to listOf(1454, 169)
 ).map { it.first.toBigInteger() to it.second.map { it.toBigInteger() } }
+
