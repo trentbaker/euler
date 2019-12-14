@@ -29,7 +29,7 @@ fun main() {
                     .firstOfTheMonthsUntil(LocalDate.of(2000, 12, 31))
                     .filter { it.dayOfWeek == DayOfWeek.SUNDAY }.size
     )
-    println("PE20. Find the sum of the digits in the number 100: " +
+    println("PE20. Find the sum of the digits in the number 100!: " +
             100.toBigInteger().factorial().toString().map { it.toInt() - 48 }.sum()
     )
 }
