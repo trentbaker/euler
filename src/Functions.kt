@@ -17,6 +17,12 @@ fun primesBelow(max: Int): MutableList<Int> {
 	return result.toMutableList()
 }
 
+fun Int.isPrime() = when (this) {
+	1 -> false
+	2 -> true
+	else -> (listOf(2) + (3 until this step 2).toList()).all { this % it != 0 }
+}
+
 fun primeFactors(input: BigInteger): List<BigInteger> {
 	if (input == BigInteger.ONE) return listOf(input)
 
@@ -276,3 +282,13 @@ fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { ab
 }
 
 fun List<Pair<List<String>, List<String>>>.importAsHands(): List<Pair<Hand, Hand>> = this.map { Hand(it.first.map { Card(it) }) to Hand(it.second.map { Card(it) }) }
+
+fun String.cycle(count: Int): String = (count % this.length).let { this.drop(it) + this.take(it) }
+
+fun Int.cycle(count: Int): Int = this.toString().cycle(count).toInt()
+
+// can pass a set of primes to calculate faster
+// otherwise falls back to brute force
+fun String.isCircularPrime(primes: HashSet<String>? = null) = (if (primes != null) {
+	this.indices.map { primes.contains(this.cycle(it)) }
+} else this.indices.map { this.cycle(it).toInt().isPrime() }).all { it }
