@@ -5,6 +5,7 @@ val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.
 val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
 val NAMES_FILE = File("res/names.txt").readText().filter { it != '"' }.split(',')
 val POKER_HANDS = File("res/poker_hands.txt").readLines().map { it.split(' ') }.map { it.take(it.size / 2) to it.drop(it.size / 2) }
+val PRIMES_BELOW_ONE_MILLION = File("res/primes_below_one_million.txt").readText().split(", ").toHashSet()
 
 val testPokerHands = listOf(
 	"AH JH KH QH TH", // royal flush

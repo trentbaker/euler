@@ -1,4 +1,4 @@
-fun timed(fn: () -> Any): Long = System.currentTimeMillis().also { start ->
+fun <T> timed(fn: () -> T): T = System.currentTimeMillis().let { start ->
 	fn().also { println("took ${System.currentTimeMillis() - start}ms") }
 }
 
