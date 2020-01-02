@@ -21,6 +21,17 @@ val testPokerHands = listOf(
 	"AS 2S 3S 4S 5S" // ace low straight flush
 ).map { Hand(it) }
 
+enum class Direction(val xDir: Int, val yDir: Int) {
+	NORTH(0, -1),
+	NORTH_EAST(1, -1),
+	EAST(1, 0),
+	SOUTH_EAST(1, 1),
+	SOUTH(0, 1),
+	SOUTH_WEST(-1, 1),
+	WEST(-1, 0),
+	NORTH_WEST(-1, -1)
+}
+
 object Triangles {
 	val FOUR_LAYER_TRIANGLE = listOf(
 		listOf("3"),

@@ -2,6 +2,9 @@ import java.time.DayOfWeek
 import java.time.LocalDate
 
 fun main() {
+    println("PE11. What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the 20×20 grid: " +
+            TWENTY_SQUARE_GRID.largestProductOfAdjacent(4)
+    )
     println("PE12. What is the value of the first triangle number to have over five hundred divisors: " +
             triangleNumbers().first { it.factors().size > 500 }
     )

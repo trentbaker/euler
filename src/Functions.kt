@@ -32,7 +32,7 @@ fun primeFactors(input: BigInteger): List<BigInteger> {
 	// this could cause problems with big primes
 	if (relevantPrimes.contains(input)) return listOf(input)
 
-	while (product(output) != input) {
+	while (product(output.toList()) != input) {
 		if (relevantPrimes.isEmpty()) throw Exception("might need more primes")
 		while (current % relevantPrimes.first() == BigInteger.ZERO) {
 			current /= relevantPrimes.first()
@@ -44,11 +44,14 @@ fun primeFactors(input: BigInteger): List<BigInteger> {
 	return output
 }
 
-fun product(input: MutableList<BigInteger>?): BigInteger? {
-	if (input == mutableListOf<BigInteger>()) return BigInteger.ZERO
-	var output = input?.first()
-	input?.drop(1)?.forEach { output = (output ?: BigInteger.ZERO).times(it) }
-	return output
+@JvmName("mutableNullableBigIntProduct")
+fun product(input: List<BigInteger>?): BigInteger = input?.takeIf { it.isNotEmpty() }?.toList()?.let { product(it) } ?: BigInteger.ZERO
+
+fun product(input: List<BigInteger>): BigInteger = input.drop(1).let {
+	if (input.isEmpty()) return@let BigInteger.ZERO
+	var output = input.first()
+	it.forEach { output *= it }
+	output
 }
 
 fun Int.isPalindromic(): Boolean {
@@ -118,7 +121,7 @@ fun largestProductAdjacent(numAdjacent: Int): BigInteger {
 			THOUSAND_DIGIT_NUMBER.sublistOrNull(
 				index,
 				index + numAdjacent
-			)?.map { it.toBigInteger() }?.toMutableList()
+			)?.map { it.toBigInteger() }
 		)
 			.let {
 				if (it ?: BigInteger.ZERO > maxProduct) maxProduct = it
@@ -276,3 +279,23 @@ fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { ab
 }
 
 fun List<Pair<List<String>, List<String>>>.importAsHands(): List<Pair<Hand, Hand>> = this.map { Hand(it.first.map { Card(it) }) to Hand(it.second.map { Card(it) }) }
+
+fun List<List<BigInteger>>.getLinearInDirection(start: Pair<Int, Int>, direction: Direction, length: Int) =
+	(0 until length).mapNotNull {
+		this.getOrNull(start.second + (direction.yDir * it))
+			?.getOrNull(start.first + (direction.xDir * it))
+	}
+
+fun List<List<BigInteger>>.largestProductOfAdjacent(length: Int): BigInteger {
+	var max = BigInteger.ZERO
+	this.indices.forEach { x ->
+		this.first().indices.forEach { y ->
+			Direction.values().forEach { dir ->
+				product(this.getLinearInDirection(x to y, dir, length)).also {
+					if (it > max) max = it
+				}
+			}
+		}
+	}
+	return max
+}
