@@ -1,3 +1,4 @@
+import objects.Hand
 import java.io.File
 
 val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }

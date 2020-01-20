@@ -1,3 +1,16 @@
+package problems
+
+import fibonacciUntil
+import getPrimes
+import isPythagTriple
+import largestPalindromeProduct3Digits
+import largestProductAdjacent
+import primeFactors
+import product
+import squareOfSum
+import sumOfSquares
+import sumTo1000
+
 fun main() {
     println("PE1. Find the sum of all the multiples of 3 or 5 below 1000: " +
             (0 until 1000).toList().filter { it % 3 == 0 || it % 5 == 0 }.sum()
@@ -12,7 +25,7 @@ fun main() {
             largestPalindromeProduct3Digits()
     )
     println("PE5. What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20: " +
-            // smallestDivisbleBy(1..20) // took 19.673s
+            // main.smallestDivisbleBy(1..20) // took 19.673s
             "232792560"
     )
     println("PE6. Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum: " +
@@ -28,7 +41,7 @@ fun main() {
             product(sumTo1000().filter { isPythagTriple(it) }.first().toList().toMutableList().map { it.toBigInteger() }.toMutableList())
     )
     println("PE10. Find the sum of all the primes below two million: " +
-            // primesBelow(2000000).map { it.toBigInteger() }.sum() // took 13.194s
+            // main.primesBelow(2000000).map { it.toBigInteger() }.sum() // took 13.194s
             "142913828922"
     )
 }

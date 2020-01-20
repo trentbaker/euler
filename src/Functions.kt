@@ -1,3 +1,6 @@
+import objects.BinaryNode
+import objects.Card
+import objects.Hand
 import java.math.BigInteger
 import java.time.LocalDate
 import kotlin.math.floor
@@ -124,10 +127,10 @@ fun largestProductAdjacent(numAdjacent: Int): BigInteger {
 	var maxProduct = BigInteger.ZERO
 	THOUSAND_DIGIT_NUMBER.forEachIndexed { index, i ->
 		product(
-			THOUSAND_DIGIT_NUMBER.sublistOrNull(
-				index,
-				index + numAdjacent
-			)?.map { it.toBigInteger() }
+				THOUSAND_DIGIT_NUMBER.sublistOrNull(
+						index,
+						index + numAdjacent
+				)?.map { it.toBigInteger() }
 		)
 			.let {
 				if (it ?: BigInteger.ZERO > maxProduct) maxProduct = it

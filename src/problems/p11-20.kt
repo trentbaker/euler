@@ -1,3 +1,18 @@
+package problems
+
+import HUNDRED_FIFTY_DIGITS
+import TWENTY_SQUARE_GRID
+import Triangles
+import countRoutesInSquareGrid
+import factorial
+import factors
+import firstOfTheMonthsUntil
+import importTriangle
+import largestProductOfAdjacent
+import largestWeightRoute
+import numberToWords
+import sum
+import triangleNumbers
 import java.time.DayOfWeek
 import java.time.LocalDate
 
@@ -12,7 +27,7 @@ fun main() {
             HUNDRED_FIFTY_DIGITS.sum().toString().take(10)
     )
     println("PE14. Which number, under one million, produces the longest collatz chain: " +
-            // IntRange(1, 1000000).map { it to collatzSequence(it).count() }.maxBy { it.second }?.first // took 14.899s
+            // IntRange(1, 1000000).map { it to main.collatzSequence(it).count() }.maxBy { it.second }?.first // took 14.899s
             "837799"
     )
     println("PE15. Starting in the top left corner of a grid, and only being able to move to the right and down, how many such routes are there: " +
