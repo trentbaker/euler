@@ -1,5 +1,6 @@
 import objects.BinaryNode
 import objects.Card
+import objects.Fraction
 import objects.Hand
 import java.math.BigInteger
 import java.time.LocalDate
@@ -317,3 +318,5 @@ fun Int.cycle(count: Int): Int = this.toString().cycle(count).toInt()
 fun String.isCircularPrime(primes: HashSet<String>? = null) = (if (primes != null) {
 	this.indices.map { primes.contains(this.cycle(it)) }
 } else this.indices.map { this.cycle(it).toInt().isPrime() }).all { it }
+
+infix fun Int.over(other: Int) = Fraction(this, other)
