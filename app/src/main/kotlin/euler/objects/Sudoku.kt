@@ -1,6 +1,4 @@
-package objects
-
-import java.io.File
+package euler.objects
 
 class Sudoku(private val board: List<List<Char>>, private val name: String = "unnamed") {
 
@@ -54,9 +52,9 @@ class Sudoku(private val board: List<List<Char>>, private val name: String = "un
         }
     }
 
-    private val mostConstrainedCell: Pair<Int, Int> = constraintMap.mapIndexedNotNull() { i, row ->
-        row.mapIndexed { j, constraint -> (i to j) to constraint }.maxBy { it.second }
-    }.maxBy { it.second }?.first ?: throw Exception("no max?")
+    private val mostConstrainedCell: Pair<Int, Int> = constraintMap.mapIndexedNotNull { i, row ->
+        row.mapIndexed { j, constraint -> (i to j) to constraint }.maxByOrNull { it.second }
+    }.maxByOrNull { it.second }?.first ?: throw Exception("no max?")
 
     private val mostConstrainedDomain: List<Char> = listOf('1', '2', '3', '4', '5', '6', '7', '8', '9')
         .filter { !board[mostConstrainedCell.first].contains(it) }

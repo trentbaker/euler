@@ -1,8 +1,8 @@
-package problems
+package euler.problems
 
-import Triangles
-import importTriangle
-import largestWeightRoute
+import euler.Triangles
+import euler.importTriangle
+import euler.largestWeightRoute
 
 fun main() {
     println("PE67. Find the maximum total from top to bottom of the big ass triangle: " +

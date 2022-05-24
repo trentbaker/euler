@@ -1,12 +1,15 @@
-import objects.Hand
+package euler
+
+import euler.objects.Hand
 import java.io.File
 
-val THOUSAND_DIGIT_NUMBER = File("res/thousand.txt").readText().map { it.toInt() - 48 }
-val TWENTY_SQUARE_GRID = File("res/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
-val HUNDRED_FIFTY_DIGITS = File("res/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
-val NAMES_FILE = File("res/names.txt").readText().filter { it != '"' }.split(',')
-val POKER_HANDS = File("res/poker_hands.txt").readLines().map { it.split(' ') }.map { it.take(it.size / 2) to it.drop(it.size / 2) }
-val PRIMES_BELOW_ONE_MILLION = File("res/primes_below_one_million.txt").readText().split(", ").toHashSet()
+private const val PATH_PREFIX = "app/src/main/resources"
+val THOUSAND_DIGIT_NUMBER = File("${PATH_PREFIX}/thousand.txt").readText().map { it.code - 48 }
+val TWENTY_SQUARE_GRID = File("${PATH_PREFIX}/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
+val HUNDRED_FIFTY_DIGITS = File("${PATH_PREFIX}/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
+val NAMES_FILE = File("${PATH_PREFIX}/names.txt").readText().filter { it != '"' }.split(',')
+val POKER_HANDS = File("${PATH_PREFIX}/poker_hands.txt").readLines().map { it.split(' ') }.map { it.take(it.size / 2) to it.drop(it.size / 2) }
+val PRIMES_BELOW_ONE_MILLION = File("${PATH_PREFIX}/primes_below_one_million.txt").readText().split(", ").toHashSet()
 
 val testPokerHands = listOf(
 	"AH JH KH QH TH", // royal flush

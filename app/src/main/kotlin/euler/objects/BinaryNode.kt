@@ -1,4 +1,4 @@
-package objects
+package euler.objects
 
 class BinaryNode(var value: Int) : Comparable<BinaryNode> {
     var l: BinaryNode? = null
@@ -8,6 +8,6 @@ class BinaryNode(var value: Int) : Comparable<BinaryNode> {
     override fun compareTo(other: BinaryNode) = value
 
     fun eatLargestLivingChild() {
-        value += listOfNotNull(l, r).maxBy { it.value }?.value ?: 0
+        value += listOfNotNull(l, r).maxByOrNull { it.value }?.value ?: 0
     }
 }

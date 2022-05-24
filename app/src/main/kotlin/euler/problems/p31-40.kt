@@ -1,8 +1,8 @@
-package problems
+package euler.problems
 
-import PRIMES_BELOW_ONE_MILLION
-import digitFactorialLoopFlags
-import isCircularPrime
+import euler.PRIMES_BELOW_ONE_MILLION
+import euler.digitFactorialLoopFlags
+import euler.isCircularPrime
 
 fun main() {
     println("PE34. Find the sum of all numbers which are equal to the sum of the factorial of their digits: " +

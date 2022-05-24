@@ -1,4 +1,4 @@
-package objects
+package euler.objects
 
 import java.math.BigDecimal
 import java.math.MathContext
@@ -7,7 +7,7 @@ import java.math.RoundingMode
 class Fraction(
     private val numerator: BigDecimal,
     private val denominator: BigDecimal,
-    private val precision: Int = 200
+    precision: Int = 200
 ) {
     constructor(numerator: Int, denominator: Int, precision: Int = 200) : this(
         numerator.toBigDecimal(),

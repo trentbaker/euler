@@ -1,5 +1,7 @@
-import objects.BinaryNode
-import objects.Sudoku
+package euler
+
+import euler.objects.BinaryNode
+import euler.objects.Sudoku
 import java.io.File
 
 fun <T> timed(fn: () -> T): T = System.currentTimeMillis().let { start ->

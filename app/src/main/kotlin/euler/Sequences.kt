@@ -1,9 +1,10 @@
-import objects.Sudoku
+package euler
+
 import java.math.BigInteger
 
-fun triangleNumbers(start: Int = 1): Sequence<Int> = generateSequence(Pair(start, triangleNumber(start)), {
+fun triangleNumbers(start: Int = 1): Sequence<Int> = generateSequence(Pair(start, triangleNumber(start))) {
     Pair(it.first + 1, it.second + it.first + 1)
-}).map { it.second }
+}.map { it.second }
 
 fun triangleNumber(input: Int): Int = IntRange(0, input).sum()
 
@@ -29,7 +30,7 @@ fun bigFibonacciSequence(start: Pair<BigInteger, BigInteger> = BigInteger.ZERO t
 fun digitFactorialChain(start: Int) = digitFactorialChain(start.toBigInteger())
 
 fun digitFactorialChain(start: BigInteger = BigInteger.ONE) = generateSequence(start) { input ->
-    input.toString().toList().map { digit -> (digit.toInt() - 48).toBigInteger().factorial() }.sum()
+    input.toString().toList().map { digit -> (digit.code - 48).toBigInteger().factorial() }.sum()
 }.drop(1)
 
 fun lexicographicSequence(input: String) = generateSequence(input.toList().sorted()) { previous ->
@@ -37,7 +38,7 @@ fun lexicographicSequence(input: String) = generateSequence(input.toList().sorte
 
         // rightmost character in it, which is smaller than its next character
         val firstIndex = previous.mapIndexed { index, c ->
-            index to (previous.getOrNull(index + 1)?.compareTo(c) ?: 0 > 0)
+            index to ((previous.getOrNull(index + 1)?.compareTo(c) ?: 0) > 0)
         }.last { it.second }.first
 
         val firstCharacter = previous[firstIndex]
@@ -45,7 +46,7 @@ fun lexicographicSequence(input: String) = generateSequence(input.toList().sorte
         val secondCharacter = previous
             .drop(firstIndex + 1) // must be to the right of the first
             .filter { it > firstCharacter } // must be greater than the first
-            .min() // the smallest of these
+            .minOrNull() // the smallest of these
             ?: '?' // default
 
         val secondIndex = previous.indexOf(secondCharacter)

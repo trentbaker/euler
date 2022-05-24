@@ -1,4 +1,4 @@
-package objects
+package euler.objects
 
 class Hand(val cards: List<Card>) : Comparable<Hand> {
     init {
@@ -9,7 +9,8 @@ class Hand(val cards: List<Card>) : Comparable<Hand> {
 
     private val ranks = cards.map { it.rank }
     private val suits = cards.map { it.suit }
-    private val rankCounts: List<Pair<Card, Int>> = cards.distinctBy { it.rank }.map { card -> card to ranks.count { it == card.rank } }.sortedBy { it.second }
+    private val rankCounts: List<Pair<Card, Int>> =
+        cards.distinctBy { it.rank }.map { card -> card to ranks.count { it == card.rank } }.sortedBy { it.second }
     // NOTE the suit of the cards in rankCounts did appear in the hand, but should not be used
     // the retained suit of repeated ranks is arbitrary and unchecked
 
@@ -38,17 +39,17 @@ class Hand(val cards: List<Card>) : Comparable<Hand> {
     }
 
     private val highestRelevantCard = when (score) {
-        10, 6, 1 -> cards.max()?.rankInt
-        9, 5 -> if (ranks.contains('A')) 5 else cards.max()?.rankInt // special case for ace low straight
+        10, 6, 1 -> cards.maxOrNull()?.rankInt
+        9, 5 -> if (ranks.contains('A')) 5 else cards.maxOrNull()?.rankInt // special case for ace low straight
         4, 7 -> rankCounts.find { it.second == 3 }?.first?.rankInt // this will be fullHouseMajor
         8 -> rankCounts.find { it.second == 4 }?.first?.rankInt
-        3 -> rankCounts.filter { it.second == 2 }.maxBy { it.first }?.first?.rankInt // this will be twoPairMajor
+        3 -> rankCounts.filter { it.second == 2 }.maxByOrNull { it.first }?.first?.rankInt // this will be twoPairMajor
         2 -> rankCounts.find { it.second == 2 }?.first?.rankInt
         else -> null
     } ?: 0
 
     private val fullHouseMinor = (rankCounts.find { it.second == 2 }?.first?.rankInt).takeIf { score == 7 } ?: 0
-    private val twoPairMinor = rankCounts.filter { it.second == 2 }.minBy { it.first }?.first?.rankInt ?: 0
+    private val twoPairMinor = rankCounts.filter { it.second == 2 }.minByOrNull { it.first }?.first?.rankInt ?: 0
 
     private fun tiebreaker(other: Hand) = cards.indices.let {
         val thisCards = cards.sortedDescending()
@@ -57,24 +58,24 @@ class Hand(val cards: List<Card>) : Comparable<Hand> {
     }.firstOrNull { it != 0 }
 
     override fun compareTo(other: Hand): Int = (score - other.score).takeUnless { it == 0 }
-            ?: (highestRelevantCard - other.highestRelevantCard).takeUnless { it == 0 }
-            ?: (fullHouseMinor - other.fullHouseMinor).takeIf { score == 7 && other.score == 7 }?.takeUnless { it == 0 }
-            ?: (twoPairMinor - other.twoPairMinor).takeIf { score == 3 && other.score == 3 }?.takeUnless { it == 0 }
-            ?: tiebreaker(other)?.takeUnless { it == 0 }
-            ?: throw Exception("need more detailed comparison")
+        ?: (highestRelevantCard - other.highestRelevantCard).takeUnless { it == 0 }
+        ?: (fullHouseMinor - other.fullHouseMinor).takeIf { score == 7 && other.score == 7 }?.takeUnless { it == 0 }
+        ?: (twoPairMinor - other.twoPairMinor).takeIf { score == 3 && other.score == 3 }?.takeUnless { it == 0 }
+        ?: tiebreaker(other)?.takeUnless { it == 0 }
+        ?: throw Exception("need more detailed comparison")
 
     override fun toString() =
-            when (score) {
-                10 -> "royal flush in ${suits.first()}"
-                9 -> "straight flush in ${suits.first()} $highestRelevantCard high"
-                8 -> "four of a kind ${highestRelevantCard}s"
-                7 -> "$highestRelevantCard over $fullHouseMinor full house"
-                6 -> "flush in ${suits.first()}"
-                5 -> "straight $highestRelevantCard high"
-                4 -> "three of a kind ${highestRelevantCard}s"
-                3 -> "two pair high $highestRelevantCard"
-                2 -> "pair of ${highestRelevantCard}s"
-                1 -> "$highestRelevantCard high"
-                else -> "wack shit"
-            }.padEnd(28) + cards
+        when (score) {
+            10 -> "royal flush in ${suits.first()}"
+            9 -> "straight flush in ${suits.first()} $highestRelevantCard high"
+            8 -> "four of a kind ${highestRelevantCard}s"
+            7 -> "$highestRelevantCard euler.over $fullHouseMinor full house"
+            6 -> "flush in ${suits.first()}"
+            5 -> "straight $highestRelevantCard high"
+            4 -> "three of a kind ${highestRelevantCard}s"
+            3 -> "two pair high $highestRelevantCard"
+            2 -> "pair of ${highestRelevantCard}s"
+            1 -> "$highestRelevantCard high"
+            else -> "wack shit"
+        }.padEnd(28) + cards
 }

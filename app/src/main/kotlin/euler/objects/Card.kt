@@ -1,4 +1,4 @@
-package objects
+package euler.objects
 
 class Card(private val code: String) : Comparable<Card> {
     private val ranks = listOf('2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A')
@@ -18,7 +18,7 @@ class Card(private val code: String) : Comparable<Card> {
         'Q' -> 12
         'K' -> 13
         'A' -> 14
-        else -> rank.toInt() - 48
+        else -> rank.code - 48
     }
 
     override fun toString() = code
