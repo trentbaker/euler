@@ -6,7 +6,7 @@ import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 import kotlin.system.measureTimeMillis
 
-class Problem26KtTest : FunSpec({
+class Problem26Test : FunSpec({
     context("finding cycles") {
         withData(
             listOf(
