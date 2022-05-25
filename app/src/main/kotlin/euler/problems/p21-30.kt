@@ -5,7 +5,8 @@ import euler.amicableNumbersBelow
 import euler.bigFibonacciSequence
 import euler.calculateNameScores
 import euler.lexicographicSequence
-import euler.over
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 fun main() {
     println(
@@ -29,10 +30,5 @@ fun main() {
                 .filter { it.first.toString().length == 1000 }
                 .first().second
     )
-    println(
-        "Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part: "
-    )
-    // (1 until 10).map { (1 over it) }.forEach { println("$it: ${it.cycle}") }
-    (1 over 7).let { println("$it: ${it.cycle}") }
 
 }
