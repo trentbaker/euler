@@ -35,10 +35,8 @@ val handEmojis = listOf(
     "✋", // Raised Hand
     "🖖", // Vulcan Salute
     "👌", // OK Hand
-    "🤌", // Pinched Fingers
     "🤏", // Pinching Hand
     "🤞", // Crossed Fingers
-    "🫰", // Hand with Index Finger and Thumb Crossed
     "🤟", // Love-You Gesture
     "🤘", // Sign of the Horns
     "🤙", // Call Me Hand
@@ -47,7 +45,6 @@ val handEmojis = listOf(
     "👆", // Backhand Index Pointing Up
     "🖕", // Middle Finger
     "👇", // Backhand Index Pointing Down
-    "🫵", // Index Pointing at the Viewer
     "👍", // Thumbs Up
     "👎", // Thumbs Down
     "✊", // Raised Fist
@@ -56,7 +53,6 @@ val handEmojis = listOf(
     "🤜", // Right-Facing Fist
     "👏", // Clapping Hands
     "🙌", // Raising Hands
-    "🫶", // Heart Hands
     "👐", // Open Hands
     "🤲", // Palms Up Together
     "🤝", // Handshake
@@ -82,14 +78,12 @@ val produce = listOf(
     "🍓", // Strawberry
     "🥝", // Kiwi Fruit
     "🍅", // Tomato
-    "🫒", // Olive
     "🥥", // Coconut
     "🥑", // Avocado
     "🍆", // Eggplant
     "🥔", // Potato
     "🥕", // Carrot
     "🌽", // Ear of Corn
-    "🫑", // Bell Pepper
     "🥒", // Cucumber
     "🥬", // Leafy Green
     "🥦", // Broccoli
