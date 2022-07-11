@@ -12,13 +12,11 @@ import kotlin.math.sqrt
 fun fibonacciUntil(max: Int): Sequence<Int> = fibonacciSequence().takeWhile { it < max }
 
 fun primesBelow(max: Int): MutableList<Int> {
-    var result = (listOf(2) + (3..max step 2).toList())
+    val result = (listOf(2) + (3..max step 2)).toMutableList()
     val divisors = (2..sqrt(max.toDouble()).toInt())
 
-    divisors.forEach { divisor ->
-        result = result.filterNot { it % divisor == 0 && it != divisor }
-            .toMutableList()
-    }
+    divisors.onEach { divisor -> result.removeIf { it % divisor == 0 && it != divisor} }
+
     return result.toMutableList()
 }
 
@@ -34,8 +32,8 @@ fun primeFactors(input: BigInteger): List<BigInteger> {
     // may need to increase the starting list of primes... setting a const for now
     // but only checking primes less than input
     var relevantPrimes = primesBelow(10000)
-        .filter { it.toBigInteger() <= input }
         .map { it.toBigInteger() }
+        .filter { it <= input }
         .toMutableList()
     val output: MutableList<BigInteger> = mutableListOf()
     var current = input
@@ -105,7 +103,7 @@ fun sumOfSquares(input: IntRange): BigInteger {
 }
 
 fun getPrimes(numPrimes: Int): List<Int> {
-    var primes = mutableListOf(2)
+    val primes = mutableListOf(2)
     var current = 3
     while (primes.size < numPrimes) {
         if (primes.none { current % it == 0 }) primes.add(current)
