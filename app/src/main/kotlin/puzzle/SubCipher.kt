@@ -22,7 +22,7 @@ class SubstitutionCipher(
     private val ciphertextAlphabet: List<String> = handEmojis,
 ) {
     fun <E> MutableList<E>.removeRandom(random: Random = Random.Default) =
-        if (indices.last > 0) removeAt(random.nextInt(indices.last))
+        if (indices.last > 0) removeAt(random.nextInt(indices.last + 1))
         else single()
 
     private val encoder = run {
