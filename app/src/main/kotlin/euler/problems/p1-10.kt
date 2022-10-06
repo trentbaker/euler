@@ -21,7 +21,7 @@ fun main() {
     println("PE3. What is the largest prime factor of the number 600851475143: " +
             primeFactors(600851475143.toBigInteger()).maxOrNull()
     )
-    println("PE4. Find the largest palindrome made from the euler.mutableNullableBigIntProduct of two 3-digit numbers: " +
+    println("PE4. Find the largest palindrome made from the Product of two 3-digit numbers: " +
             largestPalindromeProduct3Digits()
     )
     println("PE5. What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20: " +
@@ -34,10 +34,10 @@ fun main() {
     println("PE7. What is the 10001st prime number: " +
             getPrimes(10001).last()
     )
-    println("PE8. Find the thirteen adjacent digits in the 1000-digit number that have the greatest euler.mutableNullableBigIntProduct. What is the value of this euler.mutableNullableBigIntProduct: " +
+    println("PE8. Find the thirteen adjacent digits in the 1000-digit number that have the greatest Product. What is the value of this Product: " +
             largestProductAdjacent(13)
     )
-    println("PE9. There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the euler.mutableNullableBigIntProduct abc: " +
+    println("PE9. There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the Product abc: " +
             product(sumTo1000().first { isPythagTriple(it) }.toList().toMutableList().map { it.toBigInteger() }.toMutableList())
     )
     println("PE10. Find the euler.sum of all the primes below two million: " +
