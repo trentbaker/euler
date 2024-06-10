@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class Problem55Test : FunSpec({
-
     context("palindromic") {
         test("single digit") {
             Problem55.palindromic(BigInteger(1)) shouldBe true
