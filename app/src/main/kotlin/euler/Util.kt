@@ -36,3 +36,13 @@ fun File.importSudokus() = readLines().chunked(10).map {
     }
     Sudoku(importedBoard, it.first())
 }
+
+abstract class EulerProblem {
+    open fun exampleProblem(): String = "Not implemented"
+    open fun realProblem(): String = "Not implemented"
+    fun execute() = buildString {
+        appendLine("----- ${this@EulerProblem::class.simpleName} -----")
+        appendLine("Example: ${exampleProblem()}")
+        appendLine("Real: ${realProblem()}")
+    }.let { println(it) }
+}

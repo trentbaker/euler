@@ -9,13 +9,11 @@ import kotlin.math.floor
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
 
-fun fibonacciUntil(max: Int): Sequence<Int> = fibonacciSequence().takeWhile { it < max }
-
 fun primesBelow(max: Int): MutableList<Int> {
     val result = (listOf(2) + (3..max step 2)).toMutableList()
     val divisors = (2..sqrt(max.toDouble()).toInt())
 
-    divisors.onEach { divisor -> result.removeIf { it % divisor == 0 && it != divisor} }
+    divisors.onEach { divisor -> result.removeIf { it % divisor == 0 && it != divisor } }
 
     return result.toMutableList()
 }
@@ -24,33 +22,6 @@ fun Int.isPrime() = when (this) {
     1 -> false
     2 -> true
     else -> (listOf(2) + (3 until this step 2).toList()).all { this % it != 0 }
-}
-
-fun primeFactors(input: BigInteger): List<BigInteger> {
-    if (input == BigInteger.ONE) return listOf(input)
-
-    // may need to increase the starting list of primes... setting a const for now
-    // but only checking primes less than input
-    var relevantPrimes = primesBelow(10000)
-        .map { it.toBigInteger() }
-        .filter { it <= input }
-        .toMutableList()
-    val output: MutableList<BigInteger> = mutableListOf()
-    var current = input
-
-    // this could cause problems with big primes
-    if (relevantPrimes.contains(input)) return listOf(input)
-
-    while (product(output.toList()) != input) {
-        if (relevantPrimes.isEmpty()) throw Exception("might need more primes")
-        while (current % relevantPrimes.first() == BigInteger.ZERO) {
-            current /= relevantPrimes.first()
-            output.add(relevantPrimes.first())
-        }
-        relevantPrimes = relevantPrimes.drop(1).toMutableList()
-    }
-
-    return output
 }
 
 @JvmName("mutableNullableBigIntProduct")
@@ -64,35 +35,6 @@ fun product(input: List<BigInteger>): BigInteger = input.drop(1).let {
     output
 }
 
-fun Int.isPalindromic(): Boolean {
-    var half = floor(this.toString().length / 2.0).toInt()
-
-    val firstHalf = this.toString().substring(0, half)
-    if (this.toString().length % 2 != 0) half++
-    val secondHalf = this.toString().substring(half).reversed()
-
-    return firstHalf == secondHalf
-}
-
-fun largestPalindromeProduct3Digits(): Int {
-    val output = mutableListOf<Int>()
-    for (x in 100 until 999) {
-        for (y in 100 until 999) {
-            with(x * y) {
-                if (this.isPalindromic()) output.add(this)
-            }
-        }
-    }
-    return output.maxOrNull() ?: throw Exception("found no palindromes")
-}
-
-fun smallestDivisbleBy(input: IntRange): Int {
-    var current = input.first.toDouble()
-    while (input.any { current % it != 0.0 })
-        current += input.filter { current % it == 0.0 }.maxOrNull()
-            ?: 1
-    return current.toInt()
-}
 
 fun squareOfSum(input: IntRange): BigInteger = input.sum().toBigInteger().pow(2)
 
@@ -194,6 +136,7 @@ fun numberToWords(input: Int): String =
                                     singleDigitWords.getOrElse(num[2]) { "" }
                         }
             }
+
             4 -> {
                 singleDigitWords[num[0]] +
                         "THOUSAND" +
@@ -205,6 +148,7 @@ fun numberToWords(input: Int): String =
                                     singleDigitWords.getOrElse(num[3]) { "" }
                         }
             }
+
             else -> "oof"
         }
     }

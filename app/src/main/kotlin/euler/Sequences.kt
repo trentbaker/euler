@@ -18,15 +18,6 @@ fun collatzSequence(start: BigInteger): Sequence<BigInteger> = generateSequence(
     }
 }
 
-fun fibonacciSequence(start: Pair<Int, Int> = 0 to 1) =
-    bigFibonacciSequence(start.first.toBigInteger() to start.second.toBigInteger())
-        .map { it.toInt() }
-
-fun bigFibonacciSequence(start: Pair<BigInteger, BigInteger> = BigInteger.ZERO to BigInteger.ONE) =
-    generateSequence(start) {
-        it.second to it.first + it.second
-    }.map { it.first }
-
 fun digitFactorialChain(start: Int) = digitFactorialChain(start.toBigInteger())
 
 fun digitFactorialChain(start: BigInteger = BigInteger.ONE) = generateSequence(start) { input ->

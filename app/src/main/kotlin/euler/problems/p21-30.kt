@@ -2,11 +2,8 @@ package euler.problems
 
 import euler.NAMES_FILE
 import euler.amicableNumbersBelow
-import euler.bigFibonacciSequence
 import euler.calculateNameScores
 import euler.lexicographicSequence
-import java.math.BigDecimal
-import java.math.RoundingMode
 
 fun main() {
     println(
@@ -25,10 +22,10 @@ fun main() {
         "PE24. What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9: " +
                 lexicographicSequence("0123456789").elementAt(999999).joinToString("")
     )
-    println("PE25. What is the index of the first term in the Fibonacci sequence to contain 1000 digits: " +
-            bigFibonacciSequence().mapIndexed { index, it -> it to index }
-                .filter { it.first.toString().length == 1000 }
-                .first().second
-    )
+//    println("PE25. What is the index of the first term in the Fibonacci sequence to contain 1000 digits: " +
+//            bigFibonacciSequence().mapIndexed { index, it -> it to index }
+//                .filter { it.first.toString().length == 1000 }
+//                .first().second
+//    )
 
 }
