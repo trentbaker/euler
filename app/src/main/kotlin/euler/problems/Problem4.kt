@@ -22,7 +22,6 @@ object Problem4 : EulerProblem() {
         val palindromeProducts = twoDigitNumbers.flatMap { x ->
             twoDigitNumbers.map { y -> x * y }
                 .filter { it.isPalindromic() }
-
         }
         append(palindromeProducts.maxOf { it })
     }
@@ -32,7 +31,6 @@ object Problem4 : EulerProblem() {
         val palindromeProducts = threeDigitNumbers.flatMap { x ->
             threeDigitNumbers.map { y -> x * y }
                 .filter { it.isPalindromic() }
-
         }
         append(palindromeProducts.maxOf { it })
     }
@@ -40,5 +38,5 @@ object Problem4 : EulerProblem() {
 }
 
 fun main() {
-    Problem4.execute()
+    println(Problem4.solve())
 }

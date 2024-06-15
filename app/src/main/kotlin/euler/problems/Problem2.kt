@@ -25,5 +25,5 @@ object Problem2 : EulerProblem() {
 }
 
 fun main () {
-    Problem2.execute()
+    println(Problem2.solve())
 }

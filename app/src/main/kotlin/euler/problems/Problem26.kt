@@ -2,13 +2,13 @@ package euler.problems
 
 import euler.problems.Problem26.decimalString
 import euler.problems.Problem26.detectCycle
+import java.math.BigDecimal
+import java.math.BigDecimal.ROUND_DOWN
+import kotlin.system.measureTimeMillis
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-import java.math.BigDecimal
-import java.math.RoundingMode
-import kotlin.system.measureTimeMillis
 
 /**
  * Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part
@@ -90,7 +90,7 @@ object Problem26 {
     }
 
     fun decimalString(denominator: Int, maxLength: Int): String =
-        BigDecimal.ONE.divide(BigDecimal(denominator), maxLength, RoundingMode.DOWN).stripTrailingZeros()
+        BigDecimal.ONE.divide(BigDecimal(denominator), maxLength, ROUND_DOWN).stripTrailingZeros()
             .toString().drop(2)
 }
 

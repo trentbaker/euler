@@ -1,6 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.6.21"
-
+    alias(libs.plugins.jvm)
     application
 }
 
@@ -9,20 +8,20 @@ repositories {
 }
 
 dependencies {
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation(platform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.6.1"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
-    testImplementation("io.kotest:kotest-runner-junit5:5.3.0")
-    testImplementation("io.kotest:kotest-framework-datatest:5.3.0")
+    implementation(libs.kotlinx.coroutines)
+    implementation(libs.kotlin.stdlib)
 }
 
-tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
 }
 
 application {
-    // Define the main class for the application.
-    mainClass.set("euler.AppKt")
+    mainClass = "org.example.AppKt"
 }
+
+//tasks.named<Test>("test") {
+//    useJUnitPlatform()
+//}

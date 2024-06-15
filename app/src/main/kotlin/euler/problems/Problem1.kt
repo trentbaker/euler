@@ -15,5 +15,5 @@ object Problem1 : EulerProblem() {
 }
 
 fun main() {
-    Problem1.execute()
+    println(Problem1.solve())
 }
