@@ -3,6 +3,7 @@ package euler.problems
 import euler.EulerProblem
 
 object Problem9 : EulerProblem() {
+    override val name = "Special Pythagorean Triplet"
     // this only finds pythagorean triples that could possibly sum to 1000 because that is our goal
     private val pythagoreanTriples = generateSequence(Triple(0, 0, 0)) { (a, b, c) ->
         when {

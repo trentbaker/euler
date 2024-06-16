@@ -5,6 +5,7 @@ import euler.triangleNumber
 import kotlin.math.sqrt
 
 object Problem12 : EulerProblem() {
+    override val name = "Highly Divisible Triangular Number"
     private val triangleNumbers = generateSequence(Pair(1, triangleNumber(1))) {
         Pair(it.first + 1, it.second + it.first + 1)
     }.map { it.second }

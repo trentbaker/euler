@@ -4,7 +4,7 @@ import euler.EulerProblem
 import java.math.BigInteger
 
 object Problem15 : EulerProblem() {
-
+    override val name = "Lattice Paths"
     private fun countRoutesInSquareGrid(dimension: Int): BigInteger {
         var paths = BigInteger.ONE
         for (i in 0 until dimension) {

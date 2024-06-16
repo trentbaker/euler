@@ -1,13 +1,10 @@
 package euler
 
-import euler.objects.BinaryNode
 import euler.objects.Card
 import euler.objects.Hand
 import euler.problems.Problem12.factorsOf
 import java.math.BigInteger
 import java.time.LocalDate
-import kotlin.math.roundToInt
-import kotlin.math.sqrt
 
 fun Int.isPrime() = when (this) {
     1 -> false
@@ -33,79 +30,6 @@ fun List<Int>.sublistOrNull(fromIndex: Int, toIndex: Int): List<Int> {
     } catch (_: Throwable) {
     }
     return output
-}
-
-fun numberToWords(input: Int): String =
-    teenWords[input] ?: input.toString().map { it.code - 48 }.let { num ->
-        when (num.size) {
-            1 -> singleDigitWords[num[0]].toString()
-            2 -> tenMultipleWords[num[0]] + singleDigitWords.getOrElse(num[1]) { "" }
-            3 -> {
-                singleDigitWords[num[0]] +
-                        "HUNDRED" +
-                        (if (tenMultipleWords[num[1]] != null || singleDigitWords[num[2]] != null || teenWords["${num[1]}${num[2]}".toInt()] != null) "AND" else "") +
-                        teenWords.getOrElse("${num[1]}${num[2]}".toInt()) {
-                            tenMultipleWords.getOrElse(num[1]) { "" } +
-                                    singleDigitWords.getOrElse(num[2]) { "" }
-                        }
-            }
-
-            4 -> {
-                singleDigitWords[num[0]] +
-                        "THOUSAND" +
-                        singleDigitWords.getOrElse(num[1]) { "" } +
-                        (if (singleDigitWords[num[1]] != null) "HUNDRED" else "") +
-                        (if (tenMultipleWords[num[2]] != null || singleDigitWords[num[3]] != null || teenWords["${num[2]}${num[3]}".toInt()] != null) "AND" else "") +
-                        teenWords.getOrElse("${num[2]}${num[3]}".toInt()) {
-                            tenMultipleWords.getOrElse(num[2]) { "" } +
-                                    singleDigitWords.getOrElse(num[3]) { "" }
-                        }
-            }
-
-            else -> "oof"
-        }
-    }
-
-fun importTriangle(input: List<List<String>>): BinaryTree =
-    input.map { layer -> layer.map { BinaryNode(it.toInt()) } }.let { tree ->
-        tree.forEachIndexed { layerIndex, layer ->
-            layer.forEachIndexed { index, node ->
-                node.l = tree.getOrNull(layerIndex + 1)?.getOrNull(index)
-                node.r = tree.getOrNull(layerIndex + 1)?.getOrNull(index + 1)
-            }
-        }
-        tree
-    }
-
-fun BinaryTree.format() =
-    this.flatten().map { it.value.toString().length }.average().roundToInt().let { averageWidth ->
-
-        fun List<BinaryNode>.withPaddedNumbers() = this.joinToString(" ") { it.toString().padStart(averageWidth, '0') }
-
-        this.last().withPaddedNumbers().length.let { totalWidth ->
-            this.map { layer ->
-                val layerString = layer.withPaddedNumbers()
-                val layerWidth = layerString.length
-                val layerPadding = ((totalWidth - layerWidth) / 2).takeIf { it >= 0 } ?: 0
-                "".padStart(layerPadding) + layerString
-            }
-        }
-    }
-
-
-fun BinaryTree.largestWeightRoute(print: Boolean = false): Int {
-    this.asReversed().forEach { layer -> layer.forEach { it.eatLargestLivingChild() } }
-    if (print) this.format().forEach { println(it) }
-    return this.first().first().value
-}
-
-fun Int.factorial() = this.toBigInteger().factorial().toInt()
-
-fun BigInteger.factorial(): BigInteger {
-    var out = BigInteger.ONE
-    var current = this
-    while (current > BigInteger.ZERO) out *= current--
-    return out
 }
 
 fun digitFactorialChainUntilNotUnique(start: Int) = digitFactorialChainUntilNotUnique(start.toBigInteger())

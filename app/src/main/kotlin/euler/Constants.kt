@@ -152,42 +152,6 @@ object Triangles {
 		listOf("23", "33", "44", "81", "80", "92", "93", "75", "94", "88", "23", "61", "39", "76", "22", "03", "28", "94", "32", "06", "49", "65", "41", "34", "18", "23", "08", "47", "62", "60", "03", "63", "33", "13", "80", "52", "31", "54", "73", "43", "70", "26", "16", "69", "57", "87", "83", "31", "03", "93", "70", "81", "47", "95", "77", "44", "29", "68", "39", "51", "56", "59", "63", "07", "25", "70", "07", "77", "43", "53", "64", "03", "94", "42", "95", "39", "18", "01", "66", "21", "16", "97", "20", "50", "90", "16", "70", "10", "95", "69", "29", "06", "25", "61", "41", "26", "15", "59", "63", "35"))
 }
 
-val singleDigitWords = mapOf(
-	1 to "ONE",
-	2 to "TWO",
-	3 to "THREE",
-	4 to "FOUR",
-	5 to "FIVE",
-	6 to "SIX",
-	7 to "SEVEN",
-	8 to "EIGHT",
-	9 to "NINE"
-)
-
-val teenWords = mapOf(
-	10 to "TEN",
-	11 to "ELEVEN",
-	12 to "TWELVE",
-	13 to "THIRTEEN",
-	14 to "FOURTEEN",
-	15 to "FIFTEEN",
-	16 to "SIXTEEN",
-	17 to "SEVENTEEN",
-	18 to "EIGHTEEN",
-	19 to "NINETEEN"
-)
-
-val tenMultipleWords = mapOf(
-	2 to "TWENTY",
-	3 to "THIRTY",
-	4 to "FORTY",
-	5 to "FIFTY",
-	6 to "SIXTY",
-	7 to "SEVENTY",
-	8 to "EIGHTY",
-	9 to "NINETY"
-)
-
 val digitFactorialLoopFlags = listOf(
 	1 to listOf(),
 	2 to listOf(),

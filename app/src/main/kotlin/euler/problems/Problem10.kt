@@ -2,8 +2,8 @@ package euler.problems
 
 import euler.EulerProblem
 
-object Problem10: EulerProblem() {
-
+object Problem10 : EulerProblem() {
+    override val name = "Summation of Primes"
     override fun exampleProblem(): String = buildString {
         append("Find the sum of all the primes below ten: ")
         val primes = Problem3.primesBelow(10)
@@ -17,6 +17,6 @@ object Problem10: EulerProblem() {
     }
 }
 
-fun main(){
+fun main() {
     println(Problem10.solve())
 }

@@ -2,8 +2,9 @@ package euler.problems
 
 import euler.EulerProblem
 
-object Problem_ : EulerProblem() {
-
+object Problem : EulerProblem() {
+    override val name = ""
+    
     override fun exampleProblem(): String = buildString {
 
     }
@@ -14,5 +15,5 @@ object Problem_ : EulerProblem() {
 }
 
 fun main() {
-    println(Problem_.solve())
+    println(Problem.solve())
 }
