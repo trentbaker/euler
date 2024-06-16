@@ -4,7 +4,6 @@ import euler.objects.Hand
 import java.io.File
 
 private const val PATH_PREFIX = "app/src/main/resources"
-val THOUSAND_DIGIT_NUMBER = File("${PATH_PREFIX}/thousand.txt").readText().map { it.code - 48 }
 val TWENTY_SQUARE_GRID = File("${PATH_PREFIX}/20x20grid.txt").readLines().map { row -> row.split(' ').map { it.toBigInteger() } }
 val HUNDRED_FIFTY_DIGITS = File("${PATH_PREFIX}/hundred_fifty_digits.txt").readLines().map { it.toBigInteger() }
 val NAMES_FILE = File("${PATH_PREFIX}/names.txt").readText().filter { it != '"' }.split(',')
@@ -25,17 +24,6 @@ val testPokerHands = listOf(
 	"AS 2H 3H 4D 5C", // ace low straight
 	"AS 2S 3S 4S 5S" // ace low straight flush
 ).map { Hand(it) }
-
-enum class Direction(val xDir: Int, val yDir: Int) {
-	NORTH(0, -1),
-	NORTH_EAST(1, -1),
-	EAST(1, 0),
-	SOUTH_EAST(1, 1),
-	SOUTH(0, 1),
-	SOUTH_WEST(-1, 1),
-	WEST(-1, 0),
-	NORTH_WEST(-1, -1)
-}
 
 object Triangles {
 	val FOUR_LAYER_TRIANGLE = listOf(

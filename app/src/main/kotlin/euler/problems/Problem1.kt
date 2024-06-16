@@ -3,6 +3,7 @@ package euler.problems
 import euler.EulerProblem
 
 object Problem1 : EulerProblem() {
+    override val name = "Multiples of 3 or 5"
      override fun exampleProblem(): String =
         "Find the sum of all multiples of 3 or 5 below 10: ${
             (0 until 10).filter { it % 3 == 0 || it % 5 == 0 }.sum()

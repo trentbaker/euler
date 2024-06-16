@@ -38,11 +38,16 @@ fun File.importSudokus() = readLines().chunked(10).map {
 }
 
 abstract class EulerProblem {
-    open fun exampleProblem(): String = "Not implemented"
-    open fun realProblem(): String = "Not implemented"
+    open fun exampleProblem(): String = ""
+    open fun realProblem(): String = ""
+    open val name: String = this::class.simpleName ?: "???"
     fun solve(): String = buildString {
         appendLine("----- ${this@EulerProblem::class.simpleName} -----")
-        appendLine("Example: ${exampleProblem()}")
-        appendLine("Real: ${realProblem()}")
+        exampleProblem().let { solution ->
+            if (solution.isNotBlank()) appendLine("Example: $solution")
+        }
+        realProblem().let { solution ->
+            if (solution.isNotBlank()) appendLine("Real: $solution")
+        }
     }
 }

@@ -4,6 +4,7 @@ import euler.EulerProblem
 import kotlin.math.floor
 
 object Problem4 : EulerProblem() {
+    override val name = "Largest Palindrome Product"
     private fun Int.isPalindromic(): Boolean {
         var half = floor(this.toString().length / 2.0).toInt()
 

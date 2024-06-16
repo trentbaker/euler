@@ -3,20 +3,11 @@ package euler
 import euler.objects.BinaryNode
 import euler.objects.Card
 import euler.objects.Hand
+import euler.problems.Problem12.factorsOf
 import java.math.BigInteger
 import java.time.LocalDate
-import kotlin.math.floor
 import kotlin.math.roundToInt
 import kotlin.math.sqrt
-
-fun primesBelow(max: Int): MutableList<Int> {
-    val result = (listOf(2) + (3..max step 2)).toMutableList()
-    val divisors = (2..sqrt(max.toDouble()).toInt())
-
-    divisors.onEach { divisor -> result.removeIf { it % divisor == 0 && it != divisor } }
-
-    return result.toMutableList()
-}
 
 fun Int.isPrime() = when (this) {
     1 -> false
@@ -35,27 +26,6 @@ fun product(input: List<BigInteger>): BigInteger = input.drop(1).let {
     output
 }
 
-
-fun squareOfSum(input: IntRange): BigInteger = input.sum().toBigInteger().pow(2)
-
-fun sumOfSquares(input: IntRange): BigInteger {
-    var output = BigInteger.ZERO
-    input.map { it.toBigInteger().pow(2) }.forEach { output = output.plus(it) }
-    return output
-}
-
-fun getPrimes(numPrimes: Int): List<Int> {
-    val primes = mutableListOf(2)
-    var current = 3
-    while (primes.size < numPrimes) {
-        if (primes.none { current % it == 0 }) primes.add(current)
-
-        // adding 2 to only try odd numbers
-        current += 2
-    }
-    return primes.toList()
-}
-
 fun List<Int>.sublistOrNull(fromIndex: Int, toIndex: Int): List<Int> {
     var output = listOf<Int>()
     try {
@@ -63,63 +33,6 @@ fun List<Int>.sublistOrNull(fromIndex: Int, toIndex: Int): List<Int> {
     } catch (_: Throwable) {
     }
     return output
-}
-
-fun largestProductAdjacent(numAdjacent: Int): BigInteger {
-
-    var maxProduct = BigInteger.ZERO
-    THOUSAND_DIGIT_NUMBER.forEachIndexed { index, i ->
-        product(
-            THOUSAND_DIGIT_NUMBER.sublistOrNull(
-                index,
-                index + numAdjacent
-            ).map { it.toBigInteger() }
-        )
-            .let {
-                if (it > maxProduct) maxProduct = it
-            }
-    }
-    return maxProduct
-}
-
-fun sumTo1000(): List<Triple<Int, Int, Int>> {
-    val output = mutableListOf<Triple<Int, Int, Int>>()
-    for (i in 1 until 999) {
-        for (j in i until 999) {
-            for (k in j until 999) {
-                if (i + j + k == 1000) output.add(Triple(i, j, k))
-            }
-        }
-    }
-    return output
-}
-
-fun isPythagTriple(input: Triple<Int, Int, Int>): Boolean =
-    input.first.toBigInteger().pow(2) + input.second.toBigInteger().pow(2) == input.third.toBigInteger().pow(2)
-
-fun List<BigInteger>.sum(): BigInteger {
-    var output = BigInteger.ZERO
-    this.forEach { output += it }
-    return output
-}
-
-fun Int.factors(): List<Int> = mutableListOf<Int>().also { output ->
-    // can check only numbers < sqrt(this) if you add inferred euler.factors
-    IntRange(0, sqrt(this.toDouble()).toInt()).forEach { current ->
-        if (current != 0 && this % current == 0) {
-            output.add(current) // add the found factor
-            output.add(this / current) // add the inferred factor
-        }
-    }
-}.distinct().sorted().toList()
-
-fun countRoutesInSquareGrid(dimension: Int): BigInteger {
-    var paths = BigInteger.ONE
-    for (i in 0 until dimension) {
-        paths *= (2 * dimension).toBigInteger() - i.toBigInteger()
-        paths /= (i + 1).toBigInteger()
-    }
-    return paths
 }
 
 fun numberToWords(input: Int): String =
@@ -216,7 +129,7 @@ fun LocalDate.firstOfTheMonthsUntil(end: LocalDate) = mutableListOf<LocalDate>()
     it
 }
 
-fun amicableNumbersBelow(max: Int) = IntRange(0, max).map { it to it.factors().dropLast(1).sum() }.let { facs ->
+fun amicableNumbersBelow(max: Int) = IntRange(0, max).map { it to factorsOf(it).dropLast(1).sum() }.let { facs ->
     facs.filter { it.first == facs.getOrNull(it.second)?.second ?: false && it.first != it.second }
 }.map { it.first }
 
@@ -224,7 +137,7 @@ fun List<String>.calculateNameScores() = this.sorted().mapIndexed { index, s ->
     s to s.toList().map { it.code - 64 }.sum() * (index + 1)
 }
 
-fun Int.isAbundant() = this.factors().dropLast(1).sum() > this
+fun Int.isAbundant() = factorsOf(this).dropLast(1).sum() > this
 
 fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { abundants ->
     this.filter { current ->
@@ -235,25 +148,7 @@ fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { ab
 fun List<Pair<List<String>, List<String>>>.importAsHands(): List<Pair<Hand, Hand>> =
     this.map { Hand(it.first.map { Card(it) }) to Hand(it.second.map { Card(it) }) }
 
-fun List<List<BigInteger>>.getLinearInDirection(start: Pair<Int, Int>, direction: Direction, length: Int) =
-    (0 until length).mapNotNull {
-        this.getOrNull(start.second + (direction.yDir * it))
-            ?.getOrNull(start.first + (direction.xDir * it))
-    }
 
-fun List<List<BigInteger>>.largestProductOfAdjacent(length: Int): BigInteger {
-    var max = BigInteger.ZERO
-    this.indices.forEach { x ->
-        this.first().indices.forEach { y ->
-            Direction.values().forEach { dir ->
-                product(this.getLinearInDirection(x to y, dir, length)).also {
-                    if (it > max) max = it
-                }
-            }
-        }
-    }
-    return max
-}
 
 fun String.cycle(count: Int): String = (count % this.length).let { this.drop(it) + this.take(it) }
 

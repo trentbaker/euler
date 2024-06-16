@@ -3,6 +3,7 @@ package euler.problems
 import euler.EulerProblem
 
 object Problem5 : EulerProblem() {
+    override val name = "Smallest Multiple"
     private fun smallestDivisibleBy(input: IntRange): Int {
         var current = input.first.toDouble()
         while (input.any { current % it != 0.0 })
