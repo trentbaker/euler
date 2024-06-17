@@ -53,22 +53,6 @@ fun LocalDate.firstOfTheMonthsUntil(end: LocalDate) = mutableListOf<LocalDate>()
     it
 }
 
-fun amicableNumbersBelow(max: Int) = IntRange(0, max).map { it to factorsOf(it).dropLast(1).sum() }.let { facs ->
-    facs.filter { it.first == facs.getOrNull(it.second)?.second ?: false && it.first != it.second }
-}.map { it.first }
-
-fun List<String>.calculateNameScores() = this.sorted().mapIndexed { index, s ->
-    s to s.toList().map { it.code - 64 }.sum() * (index + 1)
-}
-
-fun Int.isAbundant() = factorsOf(this).dropLast(1).sum() > this
-
-fun List<Int>.cannotSumFromAbundant() = this.filter { it.isAbundant() }.let { abundants ->
-    this.filter { current ->
-        abundants.map { current - it }.none { abundants.contains(it) }
-    }
-}
-
 fun List<Pair<List<String>, List<String>>>.importAsHands(): List<Pair<Hand, Hand>> =
     this.map { Hand(it.first.map { Card(it) }) to Hand(it.second.map { Card(it) }) }
 

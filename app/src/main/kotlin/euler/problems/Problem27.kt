@@ -1,25 +1,14 @@
 package euler.problems
 
-import euler.timed
+import euler.BigInteger
+import euler.EulerProblem
 import java.math.BigInteger
 
-fun BigInteger(input: Int): BigInteger = BigInteger.valueOf(input.toLong())
 
-fun main() = timed {
-    val possible = Problem27.consideredQuadratics(999, 1000)
+object Problem27 : EulerProblem() {
+    override val name = "Quadratic Primes"
 
-    val results = possible.associateWith { primeQuadratic ->
-        primeQuadratic.consecutivePrimes().also { println("$primeQuadratic had $it consecutive primes") }
-    }
-
-    val (most, consecutivePrimes) = requireNotNull(results.maxByOrNull { it.value })
-
-    println("$most had the most primes with $consecutivePrimes")
-    println("the product of the coefficients is ${most.productOfCoefficients}")
-}
-
-object Problem27 {
-    class PrimeQuadratic(private val a: BigInteger, private val b: BigInteger, private val certainty: Int = 100) {
+    class PrimeQuadratic(private val a: BigInteger, private val b: BigInteger, private val certainty: Int = 2) {
         constructor(a: Int, b: Int, certainty: Int = 100) : this(BigInteger(a), BigInteger(b), certainty)
 
         private val fn = { n: BigInteger -> n.pow(2) + a.times(n) + b }
@@ -35,9 +24,20 @@ object Problem27 {
         override fun toString() = "(a: $a, b: $b)"
     }
 
-    fun consideredQuadratics(aMagnitude: Int, bMagnitude: Int) = (-aMagnitude..aMagnitude).flatMap { a ->
+    private fun consideredQuadratics(aMagnitude: Int, bMagnitude: Int) = (-aMagnitude..aMagnitude).flatMap { a ->
         (-bMagnitude..bMagnitude).map { b ->
             PrimeQuadratic(a, b)
         }
     }
+
+    override fun realProblem(): String = buildString {
+        append("Find the products of the coefficients of the quadratic expression that produces the most primes for consecutive values of n: ")
+        val considered = consideredQuadratics(999, 1000)
+        val result = considered.maxBy { it.consecutivePrimes() }
+        append(result.productOfCoefficients)
+    }
+}
+
+fun main() {
+    println(Problem27.solve())
 }

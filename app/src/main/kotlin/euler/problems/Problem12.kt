@@ -18,7 +18,7 @@ object Problem12 : EulerProblem() {
                 output.add(input / current) // add the inferred factor
             }
         }
-        return output.distinct().sorted().toList()
+        return output.distinct().sorted()
     }
 
     override fun exampleProblem(): String = buildString {

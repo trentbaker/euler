@@ -1,6 +1,8 @@
 package euler.problems
 
+import euler.BigInteger
 import euler.EulerProblem
+import java.math.BigInteger
 
 object Problem9 : EulerProblem() {
     override val name = "Special Pythagorean Triplet"

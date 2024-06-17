@@ -1,5 +1,6 @@
 package euler.problems
 
+import euler.BigInteger
 import java.math.BigInteger
 
 object Problem30 {

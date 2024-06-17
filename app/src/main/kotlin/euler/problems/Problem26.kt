@@ -1,51 +1,11 @@
 package euler.problems
 
-import euler.problems.Problem26.decimalString
-import euler.problems.Problem26.detectCycle
+import euler.EulerProblem
 import java.math.BigDecimal
-import java.math.BigDecimal.ROUND_DOWN
-import kotlin.system.measureTimeMillis
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.runBlocking
+import java.math.RoundingMode
 
-/**
- * Find the value of d < 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part
- */
-const val MAX_LENGTH = 2000  // trial and error
-suspend fun main() {
-    measureTimeMillis {
-        val cycles = runBlocking {
-            (1 until 10).map { denominator ->
-                async(start = CoroutineStart.LAZY) {
-                    val decimalString = decimalString(denominator, MAX_LENGTH)
-                    detectCycle(decimalString)?.let { cycle ->
-                        Problem26.CycleResult(
-                            denominator = denominator,
-                            tailLength = decimalString.length,
-                            cycle = cycle,
-                            cycleLength = cycle.length
-                        )
-                    }.also {
-                        println("finished d = $denominator")
-                    }
-                }
-            }.awaitAll()
-        }
-        val answer = cycles.maxByOrNull { it?.cycle?.length ?: -1 }
-        println(answer)
-    }.also { println("took ${it}ms") }
-}
-
-object Problem26 {
-    data class CycleResult(
-        val denominator: Int,
-        val tailLength: Int,
-        val cycleLength: Int,
-        val cycle: String,
-    )
-
+object Problem26 : EulerProblem() {
+    override val name = "Reciprocal Cycles"
     fun detectCycle(input: String): String? {
         val output = input.indices.mapNotNull { index ->
             val remainingCharacters = input.drop(index + 1)
@@ -89,8 +49,35 @@ object Problem26 {
         return occurrences <= limit
     }
 
-    fun decimalString(denominator: Int, maxLength: Int): String =
-        BigDecimal.ONE.divide(BigDecimal(denominator), maxLength, ROUND_DOWN).stripTrailingZeros()
-            .toString().drop(2)
+    override fun exampleProblem() = buildString {
+        append("Find the denominator between 1 and 9 that has the longest repeating cycle: ")
+        val cycles = (1 until 10).asSequence().associateWith {
+            val decimalString = BigDecimal.ONE.divide(BigDecimal(it), 2000, RoundingMode.DOWN)
+                .stripTrailingZeros().toString()
+            detectCycle(decimalString.drop(2))
+        }
+
+        val result = cycles.maxBy { it.value?.length ?: 0 }.key
+
+        append(result)
+    }
+
+    override fun realProblem() = buildString {
+        append("Find the denominator between 1 and 1000 that has the longest repeating cycle: ")
+        val cycles = (1 until 1000).asSequence().associateWith {
+            val decimalString = BigDecimal.ONE.divide(BigDecimal(it), 2000, RoundingMode.DOWN)
+                .stripTrailingZeros().toString()
+            detectCycle(decimalString.drop(2))
+        }
+
+        val result = cycles.maxBy { it.value?.length ?: 0 }.key
+
+        append(result)
+    }
+
+}
+
+fun main() {
+    println(Problem26.solve())
 }
 

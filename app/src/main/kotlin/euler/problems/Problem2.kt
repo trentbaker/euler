@@ -1,11 +1,12 @@
 package euler.problems
 
+import euler.BigInteger
 import euler.EulerProblem
 import java.math.BigInteger
 
 object Problem2 : EulerProblem() {
     override val name = "Even Fibonacci Numbers"
-    private val fibonacciSequence = generateSequence(BigInteger(0) to BigInteger(1)) { previous ->
+    val fibonacciSequence = generateSequence(BigInteger(0) to BigInteger(1)) { previous ->
         previous.second to previous.second + previous.first
     }.map { it.first }
 

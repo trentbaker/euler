@@ -22,6 +22,7 @@ import euler.problems.Problem7
 import euler.problems.Problem8
 import euler.problems.Problem9
 import java.io.File
+import java.math.BigInteger
 
 fun <T> timed(name: String? = null, fn: () -> T): T = System.currentTimeMillis().let { start ->
     fn().also {
@@ -73,28 +74,4 @@ abstract class EulerProblem {
     }
 }
 
-
-fun main() {
-    val problems = listOf(
-        Problem1,
-        Problem2,
-        Problem3,
-        Problem4,
-        Problem5,
-        Problem6,
-        Problem7,
-        Problem8,
-        Problem9,
-        Problem10,
-        Problem11,
-        Problem12,
-        Problem13,
-        Problem14,
-        Problem15,
-        Problem16,
-        Problem17,
-        Problem18,
-        Problem19,
-        Problem20,
-    ).onEach { println(it.solve()) }
-}
+fun BigInteger(input: Int): BigInteger = BigInteger.valueOf(input.toLong())
