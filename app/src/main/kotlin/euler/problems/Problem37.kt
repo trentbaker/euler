@@ -4,6 +4,7 @@ import euler.EulerProblem
 import euler.problems.Problem35.PRIMES_BELOW_ONE_MILLION
 
 object Problem37 : EulerProblem() {
+    override val name = "Truncatable Primes"
 
     private class Prime(val value: Int) {
         constructor(value: String) : this(value.toInt())

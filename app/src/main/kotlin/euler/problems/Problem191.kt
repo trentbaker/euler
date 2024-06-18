@@ -1,51 +1,22 @@
 package euler.problems
 
-import euler.problems.Problem191.isPrizeString
-import euler.timed
+import euler.EulerProblem
 
-/**
- * A particular school offers cash rewards to children with good attendance and punctuality. If they are absent for three consecutive days or late on more than one occasion then they forfeit their prize.
- *
- * During an n-day period a trinary string is formed for each child consisting of L's (late), O's (on time), and A's (absent).
- *
- * Although there are eighty-one trinary strings for a 4-day period that can be formed, exactly forty-three strings would lead to a prize:
- *
- * OOOO OOOA OOOL OOAO OOAA OOAL OOLO OOLA OAOO OAOA
- * OAOL OAAO OAAL OALO OALA OLOO OLOA OLAO OLAA AOOO
- * AOOA AOOL AOAO AOAA AOAL AOLO AOLA AAOO AAOA AAOL
- * AALO AALA ALOO ALOA ALAO ALAA LOOO LOOA LOAO LOAA
- * LAOO LAOA LAAO
- *
- * How many "prize" strings exist over a 30-day period?
- */
-object Problem191 {
-    fun isPrizeString(s: String) = s.count { it == 'L' } < 2 && !s.contains("AAA")
-    fun enumerateStrings(alphabet: List<Char>, length: Int): Sequence<String> {
-        if (length <= 0) return generateSequence { null }
+object Problem191 : EulerProblem() {
+    override val name = "Prize Strings"
 
-        return generateSequence(List(length) { 0 }) { indices ->
-            // Find the position to increment
-            var pos = length - 1
-            while (pos >= 0 && indices[pos] == alphabet.size - 1) {
-                pos--
-            }
+    private fun isPrizeString(s: String) = s.count { it == 'L' } < 2 && !s.contains("AAA")
 
-            if (pos < 0) {
-                // If we've incremented past the first position, we're done
-                null
-            } else {
-                // Increment the current position and reset all positions to the right
-                indices.toMutableList().also { next ->
-                    next[pos]++
-                    for (i in pos + 1 until length) {
-                        next[i] = 0
-                    }
-                }
-            }
-        }.map { indices ->
-            // Convert indices to string
-            indices.map { alphabet[it] }.joinToString("")
-        }
+    fun enumerateStrings(library: String, length: Int): Sequence<String> {
+        val alphabet = library.toSortedSet().toList()
+        return generateSequence(List(length) { 0 }) { previous ->
+            val incrementingIndex = previous.indexOfLast { it < (alphabet.size - 1) }
+
+            if (incrementingIndex < 0) return@generateSequence null
+            previous.take(incrementingIndex) +
+                    (previous[incrementingIndex] + 1) +
+                    List(length - (incrementingIndex + 1)) { 0 }
+        }.map { it.joinToString("") { "${alphabet[it]}" } }
     }
 
     data class AbsentTrackerState(
@@ -85,26 +56,23 @@ object Problem191 {
             }
         }
     }
+
+    override fun exampleProblem(): String = buildString {
+        append("Find the 43 prize strings across a 4 day period: ")
+        val prizeStrings = enumerateStrings("OLA", 4)
+            .filter { isPrizeString(it) }
+
+        append(prizeStrings.toList())
+    }
+
+    override fun realProblem(): String = buildString {
+        append("How many prize strings exist across a 30 day period: ")
+        // brute forcing this would take far too long, use math
+        val result = AbsentTrackerState.daySequence.elementAt(29)
+        append(result.prizeStrings)
+    }
 }
 
 fun main() {
-    /**
-     * brute forcing because string enumeration is interesting.
-     * solving the 30-day case would need to check something like
-     * 205 trillion possible strings which is not feasible
-     */
-    timed {
-        val possibleStrings = Problem191.enumerateStrings("OAL".toList(), 4)
-        val prizeStrings = possibleStrings
-            .filter { isPrizeString(it) }
-
-        println("\nAcross a 4 day period, there are ${prizeStrings.count()} prize strings")
-    }
-    timed {
-        val period = 30
-        val out = Problem191.AbsentTrackerState.daySequence.elementAt(period - 1)
-
-        println("Across a $period day period, there are ${out.prizeStrings} prize strings")
-    }
-
+    println(Problem191.solve())
 }

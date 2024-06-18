@@ -1,49 +1,32 @@
 package euler.problems
 
+import euler.EulerProblem
 import java.io.File
 
-object Problem42 {
-    // The nth term of the sequence of triangle numbers is given by, tn = ½n(n+1);
-    // so the first ten triangle numbers are:
-    //
-    // 1, 3, 6, 10, 15, 21, 28, 36, 45, 55, ...
-    //
-    // By converting each letter in a word to a number corresponding to its alphabetical position and
-    // adding these values we form a word value. For example, the word value for SKY is 19 + 11 + 25 = 55 = t10.
-    // If the word value is a triangle number then we shall call the word a triangle word.
+object Problem42 : EulerProblem() {
+    override val name = "Coded Triangle Numbers"
 
-    // Using words.txt a text file containing nearly two-thousand common English words, how many are triangle words?
+    private val WORDS_TXT = File("app/src/main/resources/p042_words.txt")
+        .readText()
+        .filter { it != '"' }
+        .split(",")
 
-    val words = File("app/src/main/resources/p042_words.txt").readLines()
+    private val wordScores = WORDS_TXT.associateWith {
+        it.sumOf { it.code - 64 }
+    }
+    private val maxWordScore = wordScores.maxOf { it.value }
 
-    val triangleNumbers = generateSequence(1) { it + 1 }
-        .map { n -> (0.5 * n * (n + 1)).toInt() }
+    private val triangleNumbers = Problem12.triangleNumbers.takeWhile {
+        it < maxWordScore
+    }.toList()
 
-    fun wordValue(word: String) = word.map { it.code - 64 }.sum()
+    override fun realProblem(): String = buildString {
+        append("How many of words.txt are triangle words: ")
+        append(wordScores.count { it.value in triangleNumbers })
+    }
+
 }
 
 fun main() {
-    val words = File("app/src/main/resources/p042_words.txt")
-        .readText()
-        .split(',')
-        .map { it.drop(1).dropLast(1) }
-
-    val wordValues = words.associateWith { Problem42.wordValue(it) }
-    val maxWordValue = wordValues.maxOf { (_, wordValue) -> wordValue }
-
-    val relevantTriangleNumbers = Problem42.triangleNumbers.takeWhile { it < maxWordValue }.toList()
-
-    val results = wordValues.map { (word, wordValue) ->
-        Triple(word, wordValue, wordValue in relevantTriangleNumbers)
-    }
-
-    buildString {
-        results.forEach {(word, _, isTriangle)->
-            if (isTriangle) append("∆\t")
-            else append("\t")
-            appendLine(word)
-        }
-        append("number of triangle words: ")
-        appendLine(results.count { it.third })
-    }.also { print(it) }
+    println(Problem42.solve())
 }

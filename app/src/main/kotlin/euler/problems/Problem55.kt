@@ -1,50 +1,20 @@
 package euler.problems
 
 import euler.BigInteger
+import euler.EulerProblem
 import java.math.BigInteger
 import kotlin.math.ceil
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
-object Problem55 {
-    // If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
-    //
-    // Not all numbers produce palindromes so quickly. For example,
-    //
-    // 349 + 943 = 1292,
-    // 1292 + 2921 = 4213
-    // 4213 + 3124 = 7337
-    //
-    // That is, 349 took three iterations to arrive at a palindrome.
-    //
-    // Although no one has proved it yet, it is thought that some numbers, like 196, never produce a palindrome.
-    // A number that never forms a palindrome through the reverse and add process is called a Lychrel number.
-    // Due to the theoretical nature of these numbers, and for the purpose of this problem, we shall
-    // assume that a number is Lychrel until proven otherwise.
-    //
-    // In addition you are given that for every number below ten-thousand, it will either
-    //      (i) become a palindrome in less than fifty iterations, or,
-    //      (ii) no one, with all the computing power that exists, has managed so far to map it to a palindrome.
-    //
-    // In fact, 10677 is the first number to be shown to require over fifty iterations
-    // before producing a palindrome: 4668731596684224866951378664 (53 iterations, 28-digits).
-    //
-    // Surprisingly, there are palindromic numbers that are themselves Lychrel numbers; the first example is 4994.
-    //
-    // How many Lychrel numbers are there below ten-thousand?
-    //
-    // NOTE: Wording was modified slightly on 24 April 2007 to emphasise the theoretical nature of Lychrel numbers.
+object Problem55 : EulerProblem() {
+    override val name = "Lychrel Numbers"
 
-    private const val MAX_ITERATIONS = 50
+    private val lychrelNumbers = generateSequence(BigInteger.ONE) { it + BigInteger.ONE }.filter { isLychrelNumber(it) }
 
-    val input = (0..10_000)
-
-    fun lychrelSequence(input: Int) = generateSequence(input) {
-        it + it.toString().reversed().toInt()
-    }.take(50)
-
-    fun isLychrelNumber(input: BigInteger): Boolean {
-        (0..MAX_ITERATIONS).foldIndexed(input) { index, current, _ ->
+    private fun isLychrelNumber(input: BigInteger): Boolean {
+        // 50 is magic number from problem
+        (0..50).foldIndexed(input) { index, current, _ ->
             val palindromic = palindromic(current)
 
             if (palindromic && index > 0) return false // not a lychrel number
@@ -55,7 +25,7 @@ object Problem55 {
         return true // is a lychrel number
     }
 
-    fun palindromic(input: BigInteger): Boolean {
+    private fun palindromic(input: BigInteger): Boolean {
         val inputString = input.toString()
         if (inputString.length == 1) return true
         val half = (inputString.length / 2.0)
@@ -65,9 +35,15 @@ object Problem55 {
 
         return firstHalf == secondHalf.reversed()
     }
+
+    override fun realProblem(): String = buildString {
+        append("How many Lychrel numbers are there below ten-thousand: ")
+        val numbers = lychrelNumbers.takeWhile { it < BigInteger(10000) }
+
+        append(numbers.count())
+    }
 }
 
 fun main() {
-    val solution = Problem55.input.count { Problem55.isLychrelNumber(BigInteger(it)) }
-    println(solution)
+    println(Problem55.solve())
 }

@@ -1,7 +1,11 @@
 package euler.problems
 
-object Problem28 {
-    class NumberSpiral(
+import euler.EulerProblem
+
+object Problem28 : EulerProblem() {
+    override val name = "Number Spiral Diagonals"
+
+    private class NumberSpiral(
         private val dimension: Int,
     ) {
         init {
@@ -36,4 +40,20 @@ object Problem28 {
             listOf(1) + output
         }
     }
+
+    override fun exampleProblem(): String = buildString {
+        append("Find the sum of the diagonals of a 5x5 number spiral: ")
+        val spiral = NumberSpiral(5)
+        append(spiral.diagonalNumbers.sum())
+    }
+
+    override fun realProblem(): String = buildString {
+        append("Find the sum of the diagonals of a 1001x1001 number spiral: ")
+        val spiral = NumberSpiral(1001)
+        append(spiral.diagonalNumbers.sum())
+    }
+}
+
+fun main() {
+    println(Problem28.solve())
 }
