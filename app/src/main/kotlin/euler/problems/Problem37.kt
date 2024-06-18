@@ -1,25 +1,16 @@
 package euler.problems
 
-import euler.PRIMES_BELOW_ONE_MILLION
-import euler.timed
+import euler.EulerProblem
+import euler.problems.Problem35.PRIMES_BELOW_ONE_MILLION
 
-/**
- * The number 3797 has an interesting property. Being prime itself, it is possible to continuously remove
- *  digits from left to right, and remain prime at each stage: 3797, 797, 97, and 7.
- *  Similarly, we can work from right to left: 3797, 379, 37, and 3.
- *
- * Find the sum of the only eleven primes that are both truncatable from left to right and right to left.
- *
- * NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
- */
-object Problem37 {
+object Problem37 : EulerProblem() {
 
-    class Prime(val value: Int) {
+    private class Prime(val value: Int) {
         constructor(value: String) : this(value.toInt())
 
         private val digits = value.toString().toList()
 
-        val truncatedForms by lazy {
+        private val truncatedForms by lazy {
             digits.indices.flatMap {
                 listOf(
                     digits.slice(0..it),
@@ -35,13 +26,17 @@ object Problem37 {
 
         override fun toString() = "$value"
     }
+
+    override fun realProblem(): String = buildString {
+        append("Find the sum of the only eleven primes that are both truncatable from left to right and right to left: ")
+        val primes = PRIMES_BELOW_ONE_MILLION.map { Problem37.Prime(it.toString()) }
+
+        val truncatablePrimes = primes.filter { it.isTruncatablePrime }
+        append(truncatablePrimes.sumOf { it.value })
+    }
 }
 
-fun main() = timed {
-    val primes = PRIMES_BELOW_ONE_MILLION.map { Problem37.Prime(it) }
-
-    val truncatablePrimes = primes.filter { it.isTruncatablePrime }
-
-    println(truncatablePrimes.sumOf { it.value })
-
+fun main() {
+    println(Problem37.solve())
 }
+

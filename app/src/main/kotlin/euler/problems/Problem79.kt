@@ -12,13 +12,13 @@ import java.io.File
  */
 object Problem79 {
     // [319, 680, 180, 690, 129, ...]
-    val KEYLOG_TXT = File("app/src/main/resources/0079_keylog.txt").readLines()
+    private val KEYLOG_TXT = File("app/src/main/resources/0079_keylog.txt").readLines()
 
     // each of these three logins is basically a regex 319 -> .*3.*1.*9.*
     private fun containsEachInOrder(input: String): Regex =
         Regex(input.toList().joinToString(separator = "", prefix = "\\d*") { "$it\\d*" })
 
-    val alphabet = KEYLOG_TXT.joinToString("").toSortedSet()
+    private val alphabet = KEYLOG_TXT.joinToString("").toSortedSet()
 
     // this is dirty, but regex sre fast enough
     val solution = timed {

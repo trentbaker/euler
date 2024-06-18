@@ -1,27 +1,5 @@
 package euler
 
-import euler.objects.Sudoku
-import euler.problems.Problem1
-import euler.problems.Problem10
-import euler.problems.Problem11
-import euler.problems.Problem12
-import euler.problems.Problem13
-import euler.problems.Problem14
-import euler.problems.Problem15
-import euler.problems.Problem16
-import euler.problems.Problem17
-import euler.problems.Problem18
-import euler.problems.Problem19
-import euler.problems.Problem2
-import euler.problems.Problem20
-import euler.problems.Problem3
-import euler.problems.Problem4
-import euler.problems.Problem5
-import euler.problems.Problem6
-import euler.problems.Problem7
-import euler.problems.Problem8
-import euler.problems.Problem9
-import java.io.File
 import java.math.BigInteger
 
 fun <T> timed(name: String? = null, fn: () -> T): T = System.currentTimeMillis().let { start ->
@@ -33,26 +11,6 @@ fun <T> timed(name: String? = null, fn: () -> T): T = System.currentTimeMillis()
             }
         )
     }
-}
-
-fun String.swap(a: Int, b: Int) = this.let { original ->
-    toMutableList().apply {
-        set(a, original[b])
-        set(b, original[a])
-    }.joinToString("")
-}
-
-fun File.importSudokus() = readLines().chunked(10).map {
-    val importedBoard = it.drop(1).map {
-        it.mapNotNull {
-            when (it) {
-                ' ' -> null
-                '0' -> ' '
-                else -> it
-            }
-        }
-    }
-    Sudoku(importedBoard, it.first())
 }
 
 abstract class EulerProblem {

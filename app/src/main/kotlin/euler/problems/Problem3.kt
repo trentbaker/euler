@@ -2,7 +2,6 @@ package euler.problems
 
 import euler.BigInteger
 import euler.EulerProblem
-import euler.product
 import java.math.BigInteger
 import kotlin.math.sqrt
 
@@ -32,7 +31,7 @@ object Problem3 : EulerProblem() {
         // this could cause problems with big primes
         if (relevantPrimes.contains(input)) return listOf(input)
 
-        while (product(output.toList()) != input) {
+        while ((output.reduce { a, b -> a * b }) != input) {
             if (relevantPrimes.isEmpty()) throw Exception("might need more primes")
             while (current % relevantPrimes.first() == BigInteger.ZERO) {
                 current /= relevantPrimes.first()

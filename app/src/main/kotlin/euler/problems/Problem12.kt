@@ -1,14 +1,14 @@
 package euler.problems
 
 import euler.EulerProblem
-import euler.triangleNumber
 import kotlin.math.sqrt
 
 object Problem12 : EulerProblem() {
     override val name = "Highly Divisible Triangular Number"
-    private val triangleNumbers = generateSequence(Pair(1, triangleNumber(1))) {
-        Pair(it.first + 1, it.second + it.first + 1)
-    }.map { it.second }
+
+    private val triangleNumbers = generateSequence(1) { it + 1 }.map {
+        0 until it
+    }.map { it.sum() }
 
     fun factorsOf(input: Int): List<Int> {
         val output = mutableListOf<Int>()

@@ -1,11 +1,11 @@
 package euler.problems
 
 import euler.EulerProblem
-import euler.product
 import java.math.BigInteger
 
 object Problem11 : EulerProblem() {
     override val name = "Largest Product in a Grid"
+
     private val TWENTY_SQUARE_GRID = """
         08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
         49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -53,14 +53,14 @@ object Problem11 : EulerProblem() {
                 ?.getOrNull(start.first + (direction.xDir * it))
         }
 
+
     private fun largestProductOfAdjacent(grid: List<List<BigInteger>>, length: Int): BigInteger {
         var max = BigInteger.ZERO
         grid.indices.forEach { x ->
             grid.first().indices.forEach { y ->
                 Direction.entries.forEach { dir ->
-                    product(getLinearInDirection(grid, x to y, dir, length)).also {
-                        if (it > max) max = it
-                    }
+                    val a = getLinearInDirection(grid, x to y, dir, length).drop(1).reduce { a, b -> a * b }
+                    if (a > max) max = a
                 }
             }
         }

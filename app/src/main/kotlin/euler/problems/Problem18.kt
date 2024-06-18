@@ -6,7 +6,7 @@ import kotlin.math.roundToInt
 object Problem18 : EulerProblem() {
     override val name = "Maximum Path Sum I"
 
-    private class BinaryNode(var value: Int) : Comparable<BinaryNode> {
+    class BinaryNode(var value: Int) : Comparable<BinaryNode> {
         var l: BinaryNode? = null
         var r: BinaryNode? = null
 
@@ -18,7 +18,7 @@ object Problem18 : EulerProblem() {
         }
     }
 
-    private fun importTriangle(input: String): List<List<BinaryNode>> {
+    fun importTriangle(input: String): List<List<BinaryNode>> {
         val lines = input.trimIndent().split("\n").map { it.split(" ").filter { it.isNotBlank() } }
         return lines.map { layer -> layer.map { BinaryNode(it.toInt()) } }.let { tree ->
             tree.forEachIndexed { layerIndex, layer ->
@@ -48,7 +48,7 @@ object Problem18 : EulerProblem() {
         }
 
 
-    private fun largestWeightRoute(triangle: List<List<BinaryNode>>, print: Boolean = false): Int {
+    fun largestWeightRoute(triangle: List<List<BinaryNode>>, print: Boolean = false): Int {
         triangle.asReversed().forEach { layer -> layer.forEach { it.eatLargestLivingChild() } }
         if (print) triangle.format().forEach { println(it) }
         return triangle.first().first().value
