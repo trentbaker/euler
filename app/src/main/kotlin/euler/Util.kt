@@ -18,16 +18,22 @@ abstract class EulerProblem {
     open fun realProblem(): String = ""
     open val name: String = this::class.simpleName ?: "???"
     fun solve(): String {
-        val startTime = System.currentTimeMillis()
+        val timeA = System.currentTimeMillis()
+        val exampleResult = exampleProblem()
+        val timeB = System.currentTimeMillis()
+        val realResult = realProblem()
+        val timeC = System.currentTimeMillis()
+
         return buildString {
-            appendLine("----- $name -----")
-            exampleProblem().let { solution ->
-                if (solution.isNotBlank()) appendLine("Example: $solution")
+            appendLine("----- $name -----\n")
+            if (exampleResult.isNotBlank()) {
+                appendLine(exampleResult)
+                appendLine("----- example: ${timeB - timeA}ms -----\n")
             }
-            realProblem().let { solution ->
-                if (solution.isNotBlank()) appendLine("Real: $solution")
+            if (realResult.isNotBlank()) {
+                appendLine(realResult)
+                appendLine("----- real: ${timeC - timeB}ms -----\n")
             }
-            appendLine("----- ${System.currentTimeMillis() - startTime}ms -----")
         }
     }
 }
